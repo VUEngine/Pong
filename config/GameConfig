@@ -1,0 +1,30 @@
+{
+    "_version": "1.0.0",
+    "plugins": {
+        "vuengine//fonts/AstonishFont": {},
+        "vuengine//fonts/VirtualBoyFont": {},
+        "vuengine//other/AutomaticPause": {
+            "bodyTextFont": "Default",
+            "titleTextFont": "Default"
+        },
+        "vuengine//other/I18n": {},
+        "vuengine//other/SaveDataManager": {},
+        "vuengine//states/splash/AdjustmentScreenVUEngine": {
+            "useLowPowerActor": true
+        },
+        "vuengine//states/splash/AlignmentCheckScreen": {},
+        "vuengine//states/splash/AutomaticPauseSelectionScreen": {
+            "bodyTextFont": "Default",
+            "optionsTextFont": "Default",
+            "titleTextFont": "AstonishExt"
+        },
+        "vuengine//states/splash/LanguageSelectionScreen": {
+            "titleTextFont": "AstonishExt",
+            "variant": 1
+        },
+        "vuengine//states/splash/PrecautionScreen": {
+            "textFont": "AstonishExt"
+        }
+    },
+    "projectTitle": "Pong"
+}
