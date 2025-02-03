@@ -76,8 +76,6 @@ class PongManager : ListenerObject
 	/// @return False if the listener has to be removed; true to keep it
 	override bool onEvent(ListenerObject eventFirer, uint16 eventCode);
 
-	/// Process the provided user input.
-	/// @param userInput: Struct with the current user input information
 	void processUserInput(const UserInput* userInput);
 }
 
