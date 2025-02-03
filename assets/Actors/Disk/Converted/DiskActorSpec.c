@@ -8,12 +8,12 @@
 
 #include <Actor.h>
 #include <Ball.h>
-#include <Mutator.h>
+#include <BgmapSprite.h>
 #include <Body.h>
 #include <ColliderLayers.h>
 #include <Disk.h>
-#include <BgmapSprite.h>
 #include <InGameTypes.h>
+#include <Mutator.h>
 #include <Texture.h>
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -42,7 +42,7 @@ CharSetROMSpec DiskSprite1CharsetSpec =
 	DiskActorDiskTiles,
 
 	// Frame offsets array
-	NULL,
+	NULL
 };
 
 TextureROMSpec DiskSprite1TextureSpec =
@@ -75,7 +75,7 @@ TextureROMSpec DiskSprite1TextureSpec =
 	false,
 
 	// Flag to horizontally flip the image
-	false,
+	false
 };
 
 BgmapSpriteROMSpec DiskSprite1SpriteSpec =
@@ -92,8 +92,8 @@ BgmapSpriteROMSpec DiskSprite1SpriteSpec =
 				kSpriteComponent
 			},
 
-			// Array of function animations
-			NULL,
+			// Array of animation functions
+			(const AnimationFunction**)NULL
 		},
 
 		// Spec for the texture to display
@@ -103,7 +103,7 @@ BgmapSpriteROMSpec DiskSprite1SpriteSpec =
 		__TRANSPARENCY_NONE,
 
 		// Displacement added to the sprite's position
-		{0, 0, 0, 0},
+		{0, 0, 0, 0}
 	},
 
 	// Flag to indicate in which display to show the texture (__WORLD_ON, __WORLD_LON or __WORLD_RON)
@@ -114,10 +114,51 @@ BgmapSpriteROMSpec DiskSprite1SpriteSpec =
 	__WORLD_BGMAP,
 	
 	// Pointer to affine/hbias manipulation function
-	NULL,
+	NULL
 };
 
-BodyROMSpec DiskBodySpecSpec =
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+// COLLIDERS
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+ColliderROMSpec DiskCollider1ColliderSpec = 
+{
+	// Component
+	{
+		// Allocator
+		__TYPE(Ball),
+
+		// Component type
+		kColliderComponent
+	},
+
+	// Size (x, y, z)
+	{8, 0, 0},
+
+	// Displacement (x, y, z, p)
+	{0, 0, 0, 0},
+
+	// Rotation (x, y, z)
+	{ __F_TO_FIX7_9(0.000f), __F_TO_FIX7_9(0.000f), __F_TO_FIX7_9(0.000f) },
+
+	// Scale (x, y, z)
+	{ __F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f) },
+
+	// If true this collider checks for collisions against other colliders
+	true,
+
+	// Layers in which I live
+	kLayerDisk,
+
+	// Layers to ignore when checking for collisions
+	kLayerAll & ~(kLayerPaddle)
+};
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+// BODY
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+BodyROMSpec DiskBodySpec =
 {
 	// Component
 	{
@@ -132,19 +173,19 @@ BodyROMSpec DiskBodySpecSpec =
 	true,
 
 	// Mass
-	__F_TO_FIX10_6(0.1f),
+	__F_TO_FIX10_6(0.100f),
 
 	// Friction
-	__F_TO_FIX10_6(0.0f),
+	__F_TO_FIX10_6(0.000f),
 
 	// Bounciness
-	__F_TO_FIX10_6(1.0f),
+	__F_TO_FIX10_6(1.000f),
 
 	// Maximum velocity
-	{__I_TO_FIXED(0), __I_TO_FIXED(0), __I_TO_FIXED(0)},
+	{ __I_TO_FIXED(0), __I_TO_FIXED(0), __I_TO_FIXED(0) },
 
 	// Maximum speed
-	__I_TO_FIXED(2),
+	__I_TO_FIX10_6(2),
 
 	// Axises on which the body is subject to gravity
 	__NO_AXIS,
@@ -153,38 +194,9 @@ BodyROMSpec DiskBodySpecSpec =
 	__NO_AXIS
 };
 
-ColliderROMSpec DiskCollider =
-{
-	// Component
-	{
-		// Allocator
-		__TYPE(Ball),
-
-		// Component type
-		kColliderComponent
-	},
-
-	// Size (x, y, z)
-	{8, 8, 8},
-
-	// Displacement (x, y, z, p)
-	{0, 0, 0, 0},
-
-	// Rotation (x, y, z)
-	{0, 0, 0},
-
-	// Scale (x, y, z)
-	{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
-
-	// If true this collider checks for collisions against other colliders
-	true,
-
-	// Layers in which I live
-	kLayerDisk,
-
-	// Layers to ignore when checking for collisions
-	kLayerAll & (~kLayerPaddle)
-};
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+// MUTATORS
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 MutatorROMSpec DiskMutator1MutatorSpec =
 {
@@ -196,10 +208,10 @@ MutatorROMSpec DiskMutator1MutatorSpec =
 		kMutatorComponent
 	},
 
-	/// Mutatoral class
+	// Mutation target class
 	class(Disk),
 
-	/// enabled
+	// Enabled
 	true
 };
 
@@ -210,8 +222,8 @@ MutatorROMSpec DiskMutator1MutatorSpec =
 ComponentSpec* const DiskComponentSpecs[] = 
 {
 	(ComponentSpec*)&DiskSprite1SpriteSpec,
-	(ComponentSpec*)&DiskBodySpecSpec,
-	(ComponentSpec*)&DiskCollider,
+	(ComponentSpec*)&DiskCollider1ColliderSpec,
+	(ComponentSpec*)&DiskBodySpec,
 	(ComponentSpec*)&DiskMutator1MutatorSpec,
 	NULL
 };

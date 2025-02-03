@@ -37,7 +37,7 @@ CharSetROMSpec LogoSprite1CharsetSpec =
 	LogoActorLogoTiles,
 
 	// Frame offsets array
-	NULL,
+	NULL
 };
 
 TextureROMSpec LogoSprite1TextureSpec =
@@ -70,7 +70,7 @@ TextureROMSpec LogoSprite1TextureSpec =
 	false,
 
 	// Flag to horizontally flip the image
-	false,
+	false
 };
 
 BgmapSpriteROMSpec LogoSprite1SpriteSpec =
@@ -87,8 +87,8 @@ BgmapSpriteROMSpec LogoSprite1SpriteSpec =
 				kSpriteComponent
 			},
 
-			// Array of function animations
-			NULL,
+			// Array of animation functions
+			(const AnimationFunction**)NULL
 		},
 
 		// Spec for the texture to display
@@ -98,7 +98,7 @@ BgmapSpriteROMSpec LogoSprite1SpriteSpec =
 		__TRANSPARENCY_NONE,
 
 		// Displacement added to the sprite's position
-		{0, 0, 0, 0},
+		{0, 0, 0, 0}
 	},
 
 	// Flag to indicate in which display to show the texture (__WORLD_ON, __WORLD_LON or __WORLD_RON)
@@ -109,7 +109,7 @@ BgmapSpriteROMSpec LogoSprite1SpriteSpec =
 	__WORLD_BGMAP,
 	
 	// Pointer to affine/hbias manipulation function
-	NULL,
+	NULL
 };
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
