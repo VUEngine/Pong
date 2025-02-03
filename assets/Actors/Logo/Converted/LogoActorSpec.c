@@ -76,6 +76,7 @@ TextureROMSpec LogoSprite1TextureSpec =
 BgmapSpriteROMSpec LogoSprite1SpriteSpec =
 {
 	{
+		// VisualComponent
 		{
 			// Component
 			{
@@ -87,7 +88,7 @@ BgmapSpriteROMSpec LogoSprite1SpriteSpec =
 			},
 
 			// Array of function animations
-			(const AnimationFunction**)NULL
+			NULL,
 		},
 
 		// Spec for the texture to display

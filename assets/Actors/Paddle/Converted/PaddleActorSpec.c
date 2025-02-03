@@ -9,7 +9,7 @@
 #include <Actor.h>
 #include <Body.h>
 #include <Box.h>
-#include <Behavior.h>
+#include <Mutator.h>
 #include <BgmapSprite.h>
 #include <ColliderLayers.h>
 #include <InGameTypes.h>
@@ -185,17 +185,17 @@ ColliderROMSpec PaddleColliderSpec =
 	kLayerAll
 };
 
-BehaviorROMSpec PaddleBehavior1BehaviorSpec =
+MutatorROMSpec PaddleMutator1MutatorSpec =
 {
 	{
 		// Allocator
-		__TYPE(Behavior),
+		__TYPE(Mutator),
 
 		// Component type
-		kBehaviorComponent
+		kMutatorComponent
 	},
 
-	/// Behavioral class
+	/// Mutatoral class
 	class(Paddle),
 
 	/// enabled
@@ -211,7 +211,7 @@ ComponentSpec* const PaddleComponentSpecs[] =
 	(ComponentSpec*)&PaddleSprite1SpriteSpec,
 	(ComponentSpec*)&PaddleBodySpecSpec,
 	(ComponentSpec*)&PaddleColliderSpec,
-	(ComponentSpec*)&PaddleBehavior1BehaviorSpec,
+	(ComponentSpec*)&PaddleMutator1MutatorSpec,
 	NULL
 };
 

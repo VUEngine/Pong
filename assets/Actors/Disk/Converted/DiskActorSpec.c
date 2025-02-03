@@ -8,7 +8,7 @@
 
 #include <Actor.h>
 #include <Ball.h>
-#include <Behavior.h>
+#include <Mutator.h>
 #include <Body.h>
 #include <ColliderLayers.h>
 #include <Disk.h>
@@ -186,17 +186,17 @@ ColliderROMSpec DiskCollider =
 	kLayerAll & (~kLayerPaddle)
 };
 
-BehaviorROMSpec DiskBehavior1BehaviorSpec =
+MutatorROMSpec DiskMutator1MutatorSpec =
 {
 	{
 		// Allocator
-		__TYPE(Behavior),
+		__TYPE(Mutator),
 
 		// Component type
-		kBehaviorComponent
+		kMutatorComponent
 	},
 
-	/// Behavioral class
+	/// Mutatoral class
 	class(Disk),
 
 	/// enabled
@@ -212,7 +212,7 @@ ComponentSpec* const DiskComponentSpecs[] =
 	(ComponentSpec*)&DiskSprite1SpriteSpec,
 	(ComponentSpec*)&DiskBodySpecSpec,
 	(ComponentSpec*)&DiskCollider,
-	(ComponentSpec*)&DiskBehavior1BehaviorSpec,
+	(ComponentSpec*)&DiskMutator1MutatorSpec,
 	NULL
 };
 
