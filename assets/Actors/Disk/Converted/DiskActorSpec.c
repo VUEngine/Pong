@@ -7,6 +7,11 @@
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #include <Actor.h>
+#include <Ball.h>
+#include <Behavior.h>
+#include <Body.h>
+#include <ColliderLayers.h>
+#include <Disk.h>
 #include <BgmapSprite.h>
 #include <InGameTypes.h>
 #include <Texture.h>
@@ -15,14 +20,14 @@
 // DECLARATIONS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-extern uint32 BallActorBallTiles[];
-extern uint16 BallActorBallMap[];
+extern uint32 DiskActorDiskTiles[];
+extern uint16 DiskActorDiskMap[];
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // SPRITES
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-CharSetROMSpec BallSprite1CharsetSpec =
+CharSetROMSpec DiskSprite1CharsetSpec =
 {
 	// Number of CHARs in function of the number of frames to load at the same time
 	1,
@@ -34,19 +39,19 @@ CharSetROMSpec BallSprite1CharsetSpec =
 	true,
 
 	// Tiles array
-	BallActorBallTiles,
+	DiskActorDiskTiles,
 
 	// Frame offsets array
 	NULL,
 };
 
-TextureROMSpec BallSprite1TextureSpec =
+TextureROMSpec DiskSprite1TextureSpec =
 {
 	// Pointer to the char spec that the texture uses
-	(CharSetSpec*)&BallSprite1CharsetSpec,
+	(CharSetSpec*)&DiskSprite1CharsetSpec,
 
 	// Pointer to the map array that defines how to use the tiles from the char set
-	BallActorBallMap,
+	DiskActorDiskMap,
 
 	// Horizontal size in tiles of the texture (max. 64)
 	1,
@@ -73,9 +78,10 @@ TextureROMSpec BallSprite1TextureSpec =
 	false,
 };
 
-BgmapSpriteROMSpec BallSprite1SpriteSpec =
+BgmapSpriteROMSpec DiskSprite1SpriteSpec =
 {
 	{
+		// VisualComponent
 		{
 			// Component
 			{
@@ -87,11 +93,11 @@ BgmapSpriteROMSpec BallSprite1SpriteSpec =
 			},
 
 			// Array of function animations
-			(const AnimationFunction**)NULL
+			NULL,
 		},
 
 		// Spec for the texture to display
-		(TextureSpec*)&BallSprite1TextureSpec,
+		(TextureSpec*)&DiskSprite1TextureSpec,
 
 		// Transparency mode (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -111,23 +117,112 @@ BgmapSpriteROMSpec BallSprite1SpriteSpec =
 	NULL,
 };
 
+BodyROMSpec DiskBodySpecSpec =
+{
+	// Component
+	{
+		// Allocator
+		__TYPE(Body),
+
+		// Component type
+		kPhysicsComponent
+	},
+
+	// Create body
+	true,
+
+	// Mass
+	__F_TO_FIX10_6(0.1f),
+
+	// Friction
+	__F_TO_FIX10_6(0.0f),
+
+	// Bounciness
+	__F_TO_FIX10_6(1.0f),
+
+	// Maximum velocity
+	{__I_TO_FIXED(0), __I_TO_FIXED(0), __I_TO_FIXED(0)},
+
+	// Maximum speed
+	__I_TO_FIXED(2),
+
+	// Axises on which the body is subject to gravity
+	__NO_AXIS,
+
+	// Axises around which to rotate the owner when syncronizing with body
+	__NO_AXIS
+};
+
+ColliderROMSpec DiskCollider =
+{
+	// Component
+	{
+		// Allocator
+		__TYPE(Ball),
+
+		// Component type
+		kColliderComponent
+	},
+
+	// Size (x, y, z)
+	{8, 8, 8},
+
+	// Displacement (x, y, z, p)
+	{0, 0, 0, 0},
+
+	// Rotation (x, y, z)
+	{0, 0, 0},
+
+	// Scale (x, y, z)
+	{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
+
+	// If true this collider checks for collisions against other colliders
+	true,
+
+	// Layers in which I live
+	kLayerDisk,
+
+	// Layers to ignore when checking for collisions
+	kLayerAll & (~kLayerPaddle)
+};
+
+BehaviorROMSpec DiskBehavior1BehaviorSpec =
+{
+	{
+		// Allocator
+		__TYPE(Behavior),
+
+		// Component type
+		kBehaviorComponent
+	},
+
+	/// Behavioral class
+	class(Disk),
+
+	/// enabled
+	true
+};
+
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // ACTOR
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-ComponentSpec* const BallComponentSpecs[] = 
+ComponentSpec* const DiskComponentSpecs[] = 
 {
-	(ComponentSpec*)&BallSprite1SpriteSpec,
+	(ComponentSpec*)&DiskSprite1SpriteSpec,
+	(ComponentSpec*)&DiskBodySpecSpec,
+	(ComponentSpec*)&DiskCollider,
+	(ComponentSpec*)&DiskBehavior1BehaviorSpec,
 	NULL
 };
 
-ActorROMSpec BallActorSpec =
+ActorROMSpec DiskActorSpec =
 {
 	// Class allocator
 	__TYPE(Actor),
 
 	// Component specs
-	(ComponentSpec**)BallComponentSpecs,
+	(ComponentSpec**)DiskComponentSpecs,
 
 	// Children specs
 	NULL,
@@ -140,7 +235,7 @@ ActorROMSpec BallActorSpec =
 	{0, 0, 0},
 
 	// Actor's in-game type
-	kTypeNone,
+	kTypeDisk,
 
 	// Animation to play automatically
 	NULL

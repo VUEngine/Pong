@@ -8,8 +8,10 @@
 
 #include <Actor.h>
 #include <Body.h>
+#include <Box.h>
 #include <Behavior.h>
 #include <BgmapSprite.h>
+#include <ColliderLayers.h>
 #include <InGameTypes.h>
 #include <Paddle.h>
 #include <Texture.h>
@@ -114,7 +116,6 @@ BgmapSpriteROMSpec PaddleSprite1SpriteSpec =
 	NULL,
 };
 
-
 BodyROMSpec PaddleBodySpecSpec =
 {
 	// Component
@@ -151,6 +152,39 @@ BodyROMSpec PaddleBodySpecSpec =
 	__NO_AXIS
 };
 
+ColliderROMSpec PaddleColliderSpec =
+{
+	// Component
+	{
+		// Allocator
+		__TYPE(Box),
+
+		// Component type
+		kColliderComponent
+	},
+
+	// Size (x, y, z)
+	{8, 20, 16},
+
+	// Displacement (x, y, z, p)
+	{0, 0, 0, 0},
+
+	// Rotation (x, y, z)
+	{0, 0, 0},
+
+	// Scale (x, y, z)
+	{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
+
+	// If true this collider checks for collisions against other colliders
+	false,
+
+	// Layers in which I live
+	kLayerPaddle,
+
+	// Layers to ignore when checking for collisions
+	kLayerAll
+};
+
 BehaviorROMSpec PaddleBehavior1BehaviorSpec =
 {
 	{
@@ -175,8 +209,9 @@ BehaviorROMSpec PaddleBehavior1BehaviorSpec =
 ComponentSpec* const PaddleComponentSpecs[] = 
 {
 	(ComponentSpec*)&PaddleSprite1SpriteSpec,
-	(ComponentSpec*)&PaddleBehavior1BehaviorSpec,
 	(ComponentSpec*)&PaddleBodySpecSpec,
+	(ComponentSpec*)&PaddleColliderSpec,
+	(ComponentSpec*)&PaddleBehavior1BehaviorSpec,
 	NULL
 };
 
@@ -199,7 +234,7 @@ ActorROMSpec PaddleActorSpec =
 	{0, 0, 0},
 
 	// Actor's in-game type
-	kTypeNone,
+	kTypePaddle,
 
 	// Animation to play automatically
 	NULL

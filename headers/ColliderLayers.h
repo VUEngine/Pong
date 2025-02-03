@@ -15,6 +15,11 @@
 // DEFINITIONS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-
+enum ColliderLayers
+{
+	kLayerDisk = 1 << (kLayerNone + 1),
+	kLayerPaddle = 1 << (kLayerNone + 2),
+	kLayerAll = __COLLISION_ALL_LAYERS,
+};
 
 #endif

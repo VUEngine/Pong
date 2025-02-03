@@ -2,13 +2,13 @@
 ///////////////////////////////////////////////  THIS FILE WAS AUTO-GENERATED - DO NOT EDIT  ///////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-const uint32 BallActorBallTiles[] __attribute__((aligned(4))) =
+const uint32 DiskActorDiskTiles[] __attribute__((aligned(4))) =
 {
 	0x00000000,
 	0x300C0FF0,0xC003C003,0xC003C003,0x0FF0300C,
 };
 
-const uint16 BallActorBallMap[] __attribute__((aligned(4))) =
+const uint16 DiskActorDiskMap[] __attribute__((aligned(4))) =
 {
 	0x0000,
 };

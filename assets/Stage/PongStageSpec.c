@@ -16,13 +16,14 @@
 #include <Printer.h>
 #include <Stage.h>
 #include <Sound.h>
+#include <PongManager.h>
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // DECLARATIONS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 extern ActorSpec LowPowerIndicatorActorSpec;
-extern ActorSpec BallActorSpec;
+extern ActorSpec DiskActorSpec;
 extern ActorSpec PaddleActorSpec;
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -31,9 +32,9 @@ extern ActorSpec PaddleActorSpec;
 
 PositionedActorROMSpec PongStageActors[] =
 {	
-	{&BallActorSpec, 				{0, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, NULL, NULL, NULL, false},
-	{&PaddleActorSpec, 				{-180, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, "PaddleL", NULL, NULL, false},
-	{&PaddleActorSpec, 				{180, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, NULL, NULL, NULL, false},
+	{&DiskActorSpec, 				{0, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, DISK_NAME, NULL, NULL, false},
+	{&PaddleActorSpec, 				{-180, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, PADDLE_LEFT_NAME, NULL, NULL, false},
+	{&PaddleActorSpec, 				{180, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, PADDLE_RIGHT_NAME, NULL, NULL, false},
 	{&LowPowerIndicatorActorSpec, 	{-192 + 8, 112 - 4, 0}, {0, 0, 0}, {1, 1, 1}, 0, NULL, NULL, NULL, false},
 
 	{NULL, {0, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, NULL, NULL, NULL, false},

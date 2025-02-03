@@ -25,65 +25,65 @@
                                     "data": "H4sIAAAAAAAAA4tWMjAwMFCKBQA/0T/2CAAAAA==",
                                     "height": "1",
                                     "width": "1",
-                                    "name": "Ball"
+                                    "name": "Disk"
                                 }
                             ],
                             "tiles": {
                                 "count": 1,
                                 "data": "H4sIAAAAAAAAA4tWMjYwcDZwczNQ0lFyNjAwBmFUJkgSpEgpFgBNA567LQAAAA==",
-                                "name": "Ball"
+                                "name": "Disk"
                             }
                         }
                     ]
                 },
-                "bgmapMode": "Bgmap",
-                "colorMode": 0,
-                "compression": "none",
-                "displacement": {
-                    "parallax": 0,
-                    "x": 0,
-                    "y": 0,
-                    "z": 0
-                },
-                "displayMode": "Mono",
-                "displays": "ON",
+                "name": "Disk",
+                "sourceType": "image",
                 "imageProcessingSettings": {
                     "colorDistanceFormula": "euclidean",
                     "imageQuantizationAlgorithm": "nearest",
                     "minimumColorDistanceToDither": 0,
                     "serpentine": false
                 },
+                "bgmapMode": "Bgmap",
+                "colorMode": 0,
+                "displayMode": "Mono",
+                "displays": "ON",
+                "transparency": "None",
+                "displacement": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "parallax": 0
+                },
                 "manipulationFunction": "",
-                "name": "Ball",
                 "optimizeTiles": true,
-                "section": "rom",
-                "sourceType": "image",
                 "texture": {
                     "files": [
-                        "Ball.png"
+                        "Disk.png"
                     ],
                     "files2": [],
-                    "flip": {
-                        "x": false,
-                        "y": false
-                    },
                     "padding": {
                         "x": 0,
                         "y": 0
                     },
                     "palette": 0,
                     "recycleable": false,
+                    "flip": {
+                        "x": false,
+                        "y": false
+                    },
                     "repeat": {
                         "mode": "1x1",
+                        "x": false,
+                        "y": false,
                         "size": {
                             "x": 0,
                             "y": 0
-                        },
-                        "x": false,
-                        "y": false
+                        }
                     }
                 },
-                "transparency": "None"
+                "section": "rom",
+                "compression": "none"
             }
         ],
         "wireframes": []

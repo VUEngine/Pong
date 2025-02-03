@@ -43,6 +43,9 @@ void PongState::enter(void* owner __attribute__((unused)))
 	// Load stage
 	PongState::configureStage(this, (StageSpec*)&PongStageSpec, NULL);
 
+	// Create the Pong game controller
+	this->pongManager = new PongManager(this->stage);
+
 	// Start clocks to start animations
 	PongState::startClocks(this);
 
@@ -73,6 +76,13 @@ void PongState::execute(void* owner __attribute__((unused)))
 
 void PongState::exit(void* owner __attribute__((unused)))
 {
+	if(!isDeleted(this->pongManager))
+	{
+		delete this->pongManager;
+	}	
+
+	this->pongManager = NULL;
+
 	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
 
     Base::exit(this, owner);
@@ -113,23 +123,9 @@ void PongState::resume(void* owner)
 
 void PongState::processUserInput(const UserInput* userInput)
 {
-	Paddle paddle = Stage::getChildByName(this->stage, "PaddleL", true);
-
-	if(NULL != paddle)
+	if(!isDeleted(this->pongManager))
 	{
-
-		NormalizedDirection normalizedDirection = {0, 0, 0};
-
-		if((K_LU | K_RU) & userInput->holdKey)
-		{
-			normalizedDirection.y = __UP;
-			Paddle::moveTowards(paddle, normalizedDirection);
-		}
-		else if((K_LD | K_RD) & userInput->holdKey)
-		{
-			normalizedDirection.y = __DOWN;
-			Paddle::moveTowards(paddle, normalizedDirection);
-		}
+		PongManager::processUserInput(this->pongManager, userInput);
 	}
 }
 
@@ -143,6 +139,8 @@ void PongState::constructor()
 {
 	// Always explicitly call the base's constructor
 	Base::constructor();
+
+	this->pongManager = NULL;
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
