@@ -1,12 +1,14 @@
 # Pong
-# Pong
 
-Description
+A basic implementation of the classic "Pong" game for Nintendo Virtual Boy.
 
+This is the final code of what has been implemented in the course of our [VUEngine Studio game development tutorial](https://www.vuengine.dev/documentation/tutorial/introduction/). Check it out if you want to learn how to make Virtual Boy games in the modern days with VUEngine Studio.
+
+![](screenshot.png?raw=true)
 
 ## License
 
-© VUEngine Studio User
+© Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <c.radke@posteo.de>
 
 This software is licensed under the MIT License, which means you can basically do with it whatever you
 want as long as you include the original copyright and license notice in any copy of the software/source.
