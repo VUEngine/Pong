@@ -68,7 +68,11 @@ bool Paddle::handlePropagatedMessage(int32 message)
 	}
 
 
-	Paddle::moveTowards(this, normalizedDirection);
+	if(0 != normalizedDirection.y)
+	{
+		Paddle::moveTowards(this, normalizedDirection);
+		return true;
+	}
 
 	return false;
 }
