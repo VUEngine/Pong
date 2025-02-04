@@ -29,7 +29,8 @@
 GameState game(void)
 {
 	// Initialize plugins
-	AutomaticPauseManager::setActive(
+	AutomaticPauseManager::setActive
+	(
 		AutomaticPauseManager::getInstance(),
 		GameSaveDataManager::getAutomaticPauseStatus(GameSaveDataManager::getInstance())
 	);
