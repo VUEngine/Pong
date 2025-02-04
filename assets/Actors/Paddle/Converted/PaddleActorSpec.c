@@ -7,12 +7,12 @@
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #include <Actor.h>
+#include <BgmapSprite.h>
 #include <Body.h>
 #include <Box.h>
-#include <Mutator.h>
-#include <BgmapSprite.h>
 #include <ColliderLayers.h>
 #include <InGameTypes.h>
+#include <Mutator.h>
 #include <Paddle.h>
 #include <Texture.h>
 
@@ -42,7 +42,7 @@ CharSetROMSpec PaddleSprite1CharsetSpec =
 	PaddleActorPaddleTiles,
 
 	// Frame offsets array
-	NULL,
+	NULL
 };
 
 TextureROMSpec PaddleSprite1TextureSpec =
@@ -75,12 +75,13 @@ TextureROMSpec PaddleSprite1TextureSpec =
 	false,
 
 	// Flag to horizontally flip the image
-	false,
+	false
 };
 
 BgmapSpriteROMSpec PaddleSprite1SpriteSpec =
 {
 	{
+		// VisualComponent
 		{
 			// Component
 			{
@@ -91,7 +92,7 @@ BgmapSpriteROMSpec PaddleSprite1SpriteSpec =
 				kSpriteComponent
 			},
 
-			// Array of function animations
+			// Array of animation functions
 			(const AnimationFunction**)NULL
 		},
 
@@ -102,7 +103,7 @@ BgmapSpriteROMSpec PaddleSprite1SpriteSpec =
 		__TRANSPARENCY_NONE,
 
 		// Displacement added to the sprite's position
-		{0, 0, 0, 0},
+		{0, 0, 0, 0}
 	},
 
 	// Flag to indicate in which display to show the texture (__WORLD_ON, __WORLD_LON or __WORLD_RON)
@@ -113,10 +114,51 @@ BgmapSpriteROMSpec PaddleSprite1SpriteSpec =
 	__WORLD_BGMAP,
 	
 	// Pointer to affine/hbias manipulation function
-	NULL,
+	NULL
 };
 
-BodyROMSpec PaddleBodySpecSpec =
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+// COLLIDERS
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+ColliderROMSpec PaddleCollider1ColliderSpec = 
+{
+	// Collider
+	{
+		// Allocator
+		__TYPE(Box),
+
+		// Component type
+		kColliderComponent
+	},
+
+	// Size (x, y, z)
+	{8, 32, 16},
+
+	// Displacement (x, y, z, p)
+	{0, 0, 0, 0},
+
+	// Rotation (x, y, z)
+	{ __F_TO_FIX7_9(0.000f), __F_TO_FIX7_9(0.000f), __F_TO_FIX7_9(0.000f) },
+
+	// Scale (x, y, z)
+	{ __F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f) },
+
+	// If true this collider checks for collisions against other colliders
+	false,
+
+	// Layers in which I live
+	kLayerPaddle,
+
+	// Layers to ignore when checking for collisions
+	kLayerAll
+};
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+// BODY
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+BodyROMSpec PaddleBodySpec =
 {
 	// Component
 	{
@@ -131,16 +173,16 @@ BodyROMSpec PaddleBodySpecSpec =
 	true,
 
 	// Mass
-	__F_TO_FIX10_6(0.55f),
+	__F_TO_FIX10_6(0.550f),
 
 	// Friction
-	__F_TO_FIX10_6(0.25f),
+	__F_TO_FIX10_6(0.250f),
 
 	// Bounciness
-	__F_TO_FIX10_6(1.0f),
+	__F_TO_FIX10_6(1.000f),
 
 	// Maximum velocity
-	{0, 0, 0},
+	{ __I_TO_FIXED(0), __I_TO_FIXED(0), __I_TO_FIXED(0) },
 
 	// Maximum speed
 	__I_TO_FIX10_6(8),
@@ -152,38 +194,9 @@ BodyROMSpec PaddleBodySpecSpec =
 	__NO_AXIS
 };
 
-ColliderROMSpec PaddleColliderSpec =
-{
-	// Component
-	{
-		// Allocator
-		__TYPE(Box),
-
-		// Component type
-		kColliderComponent
-	},
-
-	// Size (x, y, z)
-	{8, 20, 16},
-
-	// Displacement (x, y, z, p)
-	{0, 0, 0, 0},
-
-	// Rotation (x, y, z)
-	{0, 0, 0},
-
-	// Scale (x, y, z)
-	{__I_TO_FIX7_9(1), __I_TO_FIX7_9(1), __I_TO_FIX7_9(1)},
-
-	// If true this collider checks for collisions against other colliders
-	false,
-
-	// Layers in which I live
-	kLayerPaddle,
-
-	// Layers to ignore when checking for collisions
-	kLayerAll
-};
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+// MUTATORS
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 MutatorROMSpec PaddleMutator1MutatorSpec =
 {
@@ -195,10 +208,10 @@ MutatorROMSpec PaddleMutator1MutatorSpec =
 		kMutatorComponent
 	},
 
-	/// Mutatoral class
+	// Mutation target class
 	class(Paddle),
 
-	/// enabled
+	// Enabled
 	true
 };
 
@@ -209,8 +222,8 @@ MutatorROMSpec PaddleMutator1MutatorSpec =
 ComponentSpec* const PaddleComponentSpecs[] = 
 {
 	(ComponentSpec*)&PaddleSprite1SpriteSpec,
-	(ComponentSpec*)&PaddleBodySpecSpec,
-	(ComponentSpec*)&PaddleColliderSpec,
+	(ComponentSpec*)&PaddleCollider1ColliderSpec,
+	(ComponentSpec*)&PaddleBodySpec,
 	(ComponentSpec*)&PaddleMutator1MutatorSpec,
 	NULL
 };

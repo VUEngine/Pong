@@ -127,22 +127,26 @@ bool PongManager::onEvent(ListenerObject eventFirer __attribute__((unused)), uin
 
 		case kEventActorCreated:
 		{
-			if(__GET_CAST(Actor, eventFirer))
-			{
+            if(__GET_CAST(Disk, eventFirer))
+            {
 				if(0 == strcmp(DISK_NAME, Disk::getName(eventFirer)))
 				{
 					this->disk = Disk::safeCast(eventFirer);
+					Actor::addEventListener(eventFirer, ListenerObject::safeCast(this), kEventActorDeleted);
 				}
-				else if(0 == strcmp(PADDLE_LEFT_NAME, Actor::getName(eventFirer)))
+            }
+            else if(__GET_CAST(Paddle, eventFirer))
+            {
+				if(0 == strcmp(PADDLE_LEFT_NAME, Actor::getName(eventFirer)))
 				{
 					this->leftPaddle = Paddle::safeCast(eventFirer);
+					Actor::addEventListener(eventFirer, ListenerObject::safeCast(this), kEventActorDeleted);
 				}
 				else if(0 == strcmp(PADDLE_RIGHT_NAME, Actor::getName(eventFirer)))
 				{
 					this->rightPaddle = Paddle::safeCast(eventFirer);
+					Actor::addEventListener(eventFirer, ListenerObject::safeCast(this), kEventActorDeleted);
 				}
-
-				Actor::addEventListener(eventFirer, ListenerObject::safeCast(this), kEventActorDeleted);
 			}
 
 			return true;

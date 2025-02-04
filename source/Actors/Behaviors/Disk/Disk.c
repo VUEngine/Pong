@@ -109,10 +109,6 @@ void Disk::ready(bool recursive)
 
 void Disk::startMovement()
 {
-	Disk::stopMovement(this, __ALL_AXIS);
-
-	Body::setMaximumVelocity(this->body, (Vector3D){MAXIMUM_SPEED, MAXIMUM_SPEED, 0});
-
 	int16 angle = 0;
 
 	if(0 == _randomSeed)
@@ -128,8 +124,8 @@ void Disk::startMovement()
 
 	Vector3D velocity = 
 	{
-		__FIXED_MULT(MAXIMUM_SPEED, __FIX7_9_TO_FIXED(__COS(angle))),
-		__FIXED_MULT(MAXIMUM_SPEED, __FIX7_9_TO_FIXED(__SIN(angle))),
+		__FIXED_MULT(Body::getMaximumSpeed(this->body), __FIX7_9_TO_FIXED(__COS(angle))),
+		__FIXED_MULT(Body::getMaximumSpeed(this->body), __FIX7_9_TO_FIXED(__SIN(angle))),
 		0
 	};
 
