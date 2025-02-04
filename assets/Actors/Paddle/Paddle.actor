@@ -25,7 +25,7 @@
         "children": [],
         "colliders": [
             {
-                "checkForCollisions": false,
+                "checkForCollisions": true,
                 "displacement": {
                     "parallax": 0,
                     "x": 0,
@@ -35,7 +35,9 @@
                 "layers": [
                     "8mqpu6KL9PPdifyY"
                 ],
-                "layersToCheck": [],
+                "layersToCheck": [
+                    "EXUdZOmEedD9n6AS"
+                ],
                 "name": "Collider",
                 "pixelSize": {
                     "x": 8,

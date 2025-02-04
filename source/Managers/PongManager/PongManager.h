@@ -62,6 +62,10 @@ class PongManager : ListenerObject
 	Paddle leftPaddle;
 	Paddle rightPaddle;
 
+	/// Scoring
+	uint32 leftScore;
+	uint32 rightScore;
+
 	/// @publicsection
 
 	/// Class' constructor

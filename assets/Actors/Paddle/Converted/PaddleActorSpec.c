@@ -123,7 +123,7 @@ BgmapSpriteROMSpec PaddleSprite1SpriteSpec =
 
 ColliderROMSpec PaddleCollider1ColliderSpec = 
 {
-	// Collider
+	// Component
 	{
 		// Allocator
 		__TYPE(Box),
@@ -145,13 +145,13 @@ ColliderROMSpec PaddleCollider1ColliderSpec =
 	{ __F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f) },
 
 	// If true this collider checks for collisions against other colliders
-	false,
+	true,
 
 	// Layers in which I live
 	kLayerPaddle,
 
 	// Layers to ignore when checking for collisions
-	kLayerAll
+	kLayerAll & ~(kLayerWall)
 };
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————

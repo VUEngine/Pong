@@ -20,6 +20,7 @@
 #include <Messages.h>
 #include <Paddle.h>
 #include <PongState.h>
+#include <Printer.h>
 //#include <RumbleEffects.h>
 #include <RumbleManager.h>
 #include <Singleton.h>
@@ -87,6 +88,13 @@ void PongManager::constructor(Stage stage)
 	this->rightPaddle = NULL;
 
 	PongManager::getReady(this, stage);
+
+	this->leftPaddle = 0;
+	this->rightPaddle = 0;
+
+	PongManager::printScore(this);
+	
+	Printer::addEventListener(Printer::getInstance(), ListenerObject::safeCast(this), kEventFontRewritten);
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -107,8 +115,30 @@ bool PongManager::onEvent(ListenerObject eventFirer __attribute__((unused)), uin
 {
 	switch(eventCode)
 	{
+		case kEventFontRewritten:
+		{
+			PongManager::printScore(this);
+
+			return true;
+		}
+
 		case kEventActorDeleted:
 		{
+            if(NULL != __GET_CAST(Disk, eventFirer))
+			{
+
+				if(false && 0 < Disk::getPosition(eventFirer)->x)
+				{
+					this->leftScore++;
+				}
+				else
+				{
+					this->rightScore++;
+				}
+
+				PongManager::printScore(this);
+			}
+
 			if(NULL != this->disk && eventFirer == ListenerObject::safeCast(this->disk))
 			{
 				this->disk = NULL;
@@ -122,7 +152,7 @@ bool PongManager::onEvent(ListenerObject eventFirer __attribute__((unused)), uin
 				this->rightPaddle = NULL;
 			}
 
-			return true;
+			return false;
 		}
 
 		case kEventActorCreated:
@@ -132,7 +162,7 @@ bool PongManager::onEvent(ListenerObject eventFirer __attribute__((unused)), uin
 				if(0 == strcmp(DISK_NAME, Disk::getName(eventFirer)))
 				{
 					this->disk = Disk::safeCast(eventFirer);
-					Actor::addEventListener(eventFirer, ListenerObject::safeCast(this), kEventActorDeleted);
+					Disk::addEventListener(this->disk, ListenerObject::safeCast(this), kEventActorDeleted);
 				}
             }
             else if(__GET_CAST(Paddle, eventFirer))
@@ -140,12 +170,12 @@ bool PongManager::onEvent(ListenerObject eventFirer __attribute__((unused)), uin
 				if(0 == strcmp(PADDLE_LEFT_NAME, Actor::getName(eventFirer)))
 				{
 					this->leftPaddle = Paddle::safeCast(eventFirer);
-					Actor::addEventListener(eventFirer, ListenerObject::safeCast(this), kEventActorDeleted);
+					Paddle::addEventListener(this->leftPaddle, ListenerObject::safeCast(this), kEventActorDeleted);
 				}
 				else if(0 == strcmp(PADDLE_RIGHT_NAME, Actor::getName(eventFirer)))
 				{
 					this->rightPaddle = Paddle::safeCast(eventFirer);
-					Actor::addEventListener(eventFirer, ListenerObject::safeCast(this), kEventActorDeleted);
+					Paddle::addEventListener(this->rightPaddle, ListenerObject::safeCast(this), kEventActorDeleted);
 				}
 			}
 
@@ -225,6 +255,14 @@ void PongManager::onKeyHold(uint16 holdKey)
 	{
 		Paddle::moveTowards(this->rightPaddle, normalizedDirection);
 	}
+}
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+void PongManager::printScore()
+{
+	Printer::int32(this->leftScore, 24 - 3, 0, NULL);
+	Printer::int32(this->rightScore, 24 + 3, 0, NULL);
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
