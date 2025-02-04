@@ -12,16 +12,15 @@
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #include <Body.h>
-#include <KeypadManager.h>
-#include <Messages.h>
+#include <PongManager.h>
 
-#include "Paddle.h"
+#include "AIPaddle.h"
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // CLASS' DECLARATIONS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-mutation class Paddle;
+mutation class AIPaddle;
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // CLASS' PUBLIC METHODS
@@ -29,81 +28,32 @@ mutation class Paddle;
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-bool Paddle::handlePropagatedMessage(int32 message)
+void AIPaddle::update()
 {
-	switch(message)
+	Actor disk = Actor::safeCast(Container::getChildByName(this->parent, DISK_NAME, true));
+
+	if(!isDeleted(disk))
 	{
-		case kMessageKeypadHoldDown:
+		fixed_t forceMagnitude = 0;
+
+		fixed_t diskYPosition = Actor::getPosition(disk)->y;
+
+		if(__PIXELS_TO_METERS(2) < __ABS(diskYPosition - this->transformation.position.y))
 		{
-			NormalizedDirection normalizedDirection = {0, 0, 0};
-
-			UserInput userInput = KeypadManager::getUserInput();
-
-			if(this->transformation.position.x < 0)
+			if(diskYPosition < this->transformation.position.y)
 			{
-				if(0 != (K_LU & userInput.holdKey))
-				{
-					normalizedDirection.y = __UP;
-				}
-				else if(0 != (K_LD & userInput.holdKey))
-				{
-					normalizedDirection.y = __DOWN;
-				} 
+				forceMagnitude = -__FIXED_MULT(Body::getMass(this->body), Body::getMaximumSpeed(this->body));
 			}
 			else
 			{
-				if(0 != (K_RU & userInput.holdKey))
-				{
-					normalizedDirection.y = __UP;
-				}
-				else if(0 != (K_RU & userInput.holdKey))
-				{
-					normalizedDirection.y = __DOWN;
-				} 
+				forceMagnitude = __FIXED_MULT(Body::getMass(this->body), Body::getMaximumSpeed(this->body));
 			}
 
-			if(0 != normalizedDirection.y)
-			{
-				Paddle::moveTowards(this, normalizedDirection);
-			}
+			Vector3D force = {0, forceMagnitude, 0};
 
-			break;
+			AIPaddle::applyForce(this, &force, true);
 		}
 	}
-
-	return false;
-}
-
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-// CLASS' PRIVATE METHODS
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-void Paddle::moveTowards(NormalizedDirection normalizedDirection)
-{
-	if(isDeleted(this->body))
-	{
-		return;
-	}
-
-	Vector3D force = 
-	{
-		0,
-		__FIX10_6_MULT
-		(
-			__FIXED_MULT
-			(
-				Body::getMass(this->body), Body::getMaximumSpeed(this->body)
-			),
-			__I_TO_FIX10_6(normalizedDirection.y)
-		),
-		0
-	};
-
-	Paddle::applyForce(this, &force, true);
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————

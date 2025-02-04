@@ -57,7 +57,7 @@ void PongManager::constructor(Stage stage)
 
 void PongManager::destructor()
 {
-	// Allow a new construct	// Always explicitly call the base's destructor
+	// Always explicitly call the base's destructor
 	Base::destructor();
 }
 

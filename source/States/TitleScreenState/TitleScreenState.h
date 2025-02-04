@@ -26,7 +26,7 @@
 /// Inherits from GameState
 ///
 /// Implements an empty game state intended to be the starting for a new, awesome game.
-dynamic_singleton class TitleScreenState : GameState
+singleton class TitleScreenState : GameState
 {
 	/// @protectedsection
 

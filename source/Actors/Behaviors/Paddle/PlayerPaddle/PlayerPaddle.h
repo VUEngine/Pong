@@ -7,8 +7,8 @@
  * that was distributed with this source code.
  */
 
-#ifndef PADDLE_H_
-#define PADDLE_H_
+#ifndef PLAYER_PADDLE_H_
+#define PLAYER_PADDLE_H_
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // INCLUDES
@@ -20,12 +20,12 @@
 // CLASS' DECLARATION
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-/// Class Paddle
+/// Class PlayerPaddle
 ///
 /// Extension of Actor
 ///
-/// Implements a Pong paddle.
-mutation class Paddle : Actor
+/// Implements a Pong paddle controlled by the player.
+mutation class PlayerPaddle : Actor
 {
 	/// Default interger message handler for propagateMessage
 	/// @param message: Propagated integer message
