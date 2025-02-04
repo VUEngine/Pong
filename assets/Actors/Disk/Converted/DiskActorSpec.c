@@ -123,7 +123,7 @@ BgmapSpriteROMSpec DiskSprite1SpriteSpec =
 
 ColliderROMSpec DiskCollider1ColliderSpec = 
 {
-	// Collider
+	// Component
 	{
 		// Allocator
 		__TYPE(Ball),
@@ -151,7 +151,7 @@ ColliderROMSpec DiskCollider1ColliderSpec =
 	kLayerDisk,
 
 	// Layers to ignore when checking for collisions
-	kLayerAll & ~(kLayerPaddle)
+	kLayerAll & ~(kLayerPaddle | kLayerWall)
 };
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -185,7 +185,7 @@ BodyROMSpec DiskBodySpec =
 	{ __I_TO_FIXED(0), __I_TO_FIXED(0), __I_TO_FIXED(0) },
 
 	// Maximum speed
-	__I_TO_FIX10_6(2),
+	__I_TO_FIX10_6(3),
 
 	// Axises on which the body is subject to gravity
 	__NO_AXIS,

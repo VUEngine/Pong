@@ -19,6 +19,7 @@ enum InGameTypes
 {
 	kTypeDisk = kTypeNone + 1,
 	kTypePaddle,
+	kTypeWall,
 };
 
 #endif

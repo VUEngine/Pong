@@ -12,7 +12,7 @@
         "friction": 1,
         "gravityAxes": [],
         "mass": 0.1,
-        "maximumSpeed": 2,
+        "maximumSpeed": 3,
         "maximumVelocity": {
             "x": 0,
             "y": 0,
@@ -36,7 +36,8 @@
                     "Kcw7MNbiPnV3qhmO"
                 ],
                 "layersToCheck": [
-                    "8mqpu6KL9PPdifyY"
+                    "8mqpu6KL9PPdifyY",
+                    "EXUdZOmEedD9n6AS"
                 ],
                 "name": "Collider",
                 "pixelSize": {
