@@ -7,8 +7,8 @@
  * that was distributed with this source code.
  */
 
-#ifndef PONG_PADDLE_H_
-#define PONG_PADDLE_H_
+#ifndef PADDLE_H_
+#define PADDLE_H_
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // INCLUDES

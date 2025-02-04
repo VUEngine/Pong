@@ -41,9 +41,6 @@ class PongManager : ListenerObject
 {
 	/// @privatesection
 
-	/// The pong disk
-	Disk disk;
-
 	/// Paddles
 	Paddle leftPaddle;
 	Paddle rightPaddle;

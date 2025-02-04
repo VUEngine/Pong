@@ -34,7 +34,6 @@ void PongManager::constructor(Stage stage)
 	// Always explicitly call the base's constructor
 	Base::constructor();
 
-	this->disk = NULL;
 	this->leftPaddle = NULL;
 	this->rightPaddle = NULL;
 
@@ -52,7 +51,6 @@ void PongManager::constructor(Stage stage)
 
 void PongManager::destructor()
 {
-	this->disk = NULL;
 	this->leftPaddle = NULL;
 	this->rightPaddle = NULL;
 
@@ -75,7 +73,7 @@ bool PongManager::onEvent(ListenerObject eventFirer __attribute__((unused)), uin
 
 		case kEventActorDeleted:
 		{
-            if(NULL != __GET_CAST(Disk, eventFirer))
+			if(0 == strcmp(DISK_NAME, Disk::getName(eventFirer)))
 			{
 				SoundManager::playSound(&PointSoundSpec,  NULL, kSoundPlaybackNormal, NULL);
 				RumbleManager::startEffect(&PointRumbleEffectSpec);
@@ -92,11 +90,7 @@ bool PongManager::onEvent(ListenerObject eventFirer __attribute__((unused)), uin
 				PongManager::printScore(this);
 			}
 
-			if(NULL != this->disk && eventFirer == ListenerObject::safeCast(this->disk))
-			{
-				this->disk = NULL;
-			}
-			else if(NULL != this->leftPaddle && eventFirer == ListenerObject::safeCast(this->leftPaddle))
+			if(NULL != this->leftPaddle && eventFirer == ListenerObject::safeCast(this->leftPaddle))
 			{
 				this->leftPaddle = NULL;
 			}
@@ -110,15 +104,7 @@ bool PongManager::onEvent(ListenerObject eventFirer __attribute__((unused)), uin
 
 		case kEventActorCreated:
 		{
-            if(__GET_CAST(Disk, eventFirer))
-            {
-				if(0 == strcmp(DISK_NAME, Disk::getName(eventFirer)))
-				{
-					this->disk = Disk::safeCast(eventFirer);
-					Disk::addEventListener(this->disk, ListenerObject::safeCast(this), kEventActorDeleted);
-				}
-            }
-            else if(__GET_CAST(Paddle, eventFirer))
+			if(__GET_CAST(Paddle, eventFirer))
             {
 				if(0 == strcmp(PADDLE_LEFT_NAME, Actor::getName(eventFirer)))
 				{
@@ -145,14 +131,8 @@ void PongManager::getReady(Stage stage)
 {
 	if(!isDeleted(stage))
 	{
-		this->disk = Disk::safeCast(Stage::getChildByName(stage, (char*)DISK_NAME, false));
 		this->leftPaddle = Paddle::safeCast(Stage::getChildByName(stage, (char*)PADDLE_LEFT_NAME, true));
 		this->rightPaddle = Paddle::safeCast(Stage::getChildByName(stage, (char*)PADDLE_RIGHT_NAME, true));
-
-		if(!isDeleted(this->disk))
-		{
-			Disk::addEventListener(this->disk, ListenerObject::safeCast(this), kEventActorDeleted);
-		}
 
 		if(!isDeleted(this->leftPaddle))
 		{
