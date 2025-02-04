@@ -71,7 +71,6 @@ bool Paddle::handlePropagatedMessage(int32 message)
 		}
 	}
 
-
 	return false;
 }
 
@@ -83,7 +82,7 @@ bool Paddle::handlePropagatedMessage(int32 message)
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-void Paddle::moveTowards(NormalizedDirection direction)
+void Paddle::moveTowards(NormalizedDirection normalizedDirection)
 {
 	if(isDeleted(this->body))
 	{
@@ -99,7 +98,7 @@ void Paddle::moveTowards(NormalizedDirection direction)
 			(
 				Body::getMass(this->body), Body::getMaximumSpeed(this->body)
 			),
-			__I_TO_FIX10_6(direction.y)
+			__I_TO_FIX10_6(normalizedDirection.y)
 		),
 		0
 	};
