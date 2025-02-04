@@ -65,12 +65,6 @@ void PongState::enter(void* owner __attribute__((unused)))
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-void PongState::execute(void* owner __attribute__((unused)))
-{
-}
-
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
 void PongState::exit(void* owner __attribute__((unused)))
 {
 	if(!isDeleted(this->pongManager))
@@ -83,37 +77,6 @@ void PongState::exit(void* owner __attribute__((unused)))
 	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
 
     Base::exit(this, owner);
-}
-
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-void PongState::suspend(void* owner)
-{
-	Camera::startEffect(Camera::getInstance(), kFadeOut, __FADE_DELAY);
-
-	Base::suspend(this, owner);
-}
-
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-void PongState::resume(void* owner)
-{
-	Base::resume(this, owner);
-
-	// Enable user input
-	KeypadManager::enable();
-
-	Camera::startEffect(Camera::getInstance(), kHide);
-
-	Camera::startEffect
-	(
-		Camera::getInstance(),
-		kFadeTo,	   // effect type
-		0,			   // initial delay (in ms)
-		NULL,		   // target brightness
-		__FADE_DELAY,  // delay between fading steps (in ms)
-		NULL		   // callback scope
-	);
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————

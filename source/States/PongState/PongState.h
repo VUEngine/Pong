@@ -27,7 +27,7 @@
 /// Inherits from GameState
 ///
 /// Implements an empty game state intended to be the starting for a new, awesome game.
-dynamic_singleton class PongState : GameState
+singleton class PongState : GameState
 {
 	/// @protectedsection
 
@@ -44,21 +44,9 @@ dynamic_singleton class PongState : GameState
 	/// @param owner: Object that is entering in this state
 	override void enter(void* owner);
 
-	/// Prepares the object to enter this state.
-	/// @param owner: Object that is entering in this state
-	override void execute(void* owner);
-
 	/// Prepares the object to exit this state.
 	/// @param owner: Object that is exiting this state
 	override void exit(void* owner);
-
-	/// Prepares the object to become inactive in this state.
-	/// @param owner: Object that is in this state
-	override void suspend(void* owner);
-
-	/// Prepares the object to become active in this state.
-	/// @param owner: Object that is in this state
-	override void resume(void* owner);
 
 	/// Process the provided user input.
 	/// @param userInput: Struct with the current user input information
