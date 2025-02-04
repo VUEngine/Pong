@@ -103,7 +103,7 @@ BgmapSpriteROMSpec PlayerPaddleSprite1SpriteSpec =
 		__TRANSPARENCY_NONE,
 
 		// Displacement added to the sprite's position
-		{-6, 0, 0, 0}
+		{-2, 0, 0, 0}
 	},
 
 	// Flag to indicate in which display to show the texture (__WORLD_ON, __WORLD_LON or __WORLD_RON)
