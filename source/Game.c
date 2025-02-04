@@ -61,7 +61,7 @@ GameState game(void)
 	);
 
 	// Return the first GameState
-	return GameState::safeCast(PongState::getInstance());
+	return GameState::safeCast(PrecautionScreenState::getInstance());
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
