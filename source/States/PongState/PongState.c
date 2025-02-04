@@ -84,22 +84,9 @@ void PongState::exit(void* owner __attribute__((unused)))
 
 void PongState::processUserInput(const UserInput* userInput)
 {
-	if(K_LU & userInput->holdKey)
+	if(0 != userInput->holdKey)
 	{
-		PongState::propagateMessage(this, kMessageKeypadHoldLeftUp);
-	}
-	else if(K_LD & userInput->holdKey)
-	{
-		PongState::propagateMessage(this, kMessageKeypadHoldLeftDown);
-	}
-	
-	if(K_RU & userInput->holdKey)
-	{
-		PongState::propagateMessage(this, kMessageKeypadHoldRightUp);
-	}
-	else if(K_RD & userInput->holdKey)
-	{
-		PongState::propagateMessage(this, kMessageKeypadHoldRightDown);
+		PongState::propagateMessage(this, kMessageKeypadHoldDown);
 	}
 }
 

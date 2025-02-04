@@ -17,10 +17,7 @@
 
 enum Messages
 {
-	kMessageKeypadHoldLeftDown = kMessageLastEngine + 1,
-	kMessageKeypadHoldLeftUp,
-	kMessageKeypadHoldRightDown,
-	kMessageKeypadHoldRightUp,
+	kMessageKeypadHoldDown = kMessageLastEngine + 1,
 };
 
 #endif

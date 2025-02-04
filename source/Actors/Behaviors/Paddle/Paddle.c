@@ -12,6 +12,7 @@
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #include <Body.h>
+#include <KeypadManager.h>
 #include <Messages.h>
 
 #include "Paddle.h"
@@ -30,49 +31,46 @@ mutation class Paddle;
 
 bool Paddle::handlePropagatedMessage(int32 message)
 {
-	NormalizedDirection normalizedDirection = {0, 0, 0};
-
-	if(this->transformation.position.x < 0)
+	switch(message)
 	{
-		switch(message)
+		case kMessageKeypadHoldDown:
 		{
-			case kMessageKeypadHoldLeftUp:
+			NormalizedDirection normalizedDirection = {0, 0, 0};
+
+			UserInput userInput = KeypadManager::getUserInput();
+
+			if(this->transformation.position.x < 0)
 			{
-				normalizedDirection.y = __UP;
-				break;
+				if(0 != (K_LU & userInput.holdKey))
+				{
+					normalizedDirection.y = __UP;
+				}
+				else if(0 != (K_LD & userInput.holdKey))
+				{
+					normalizedDirection.y = __DOWN;
+				} 
+			}
+			else
+			{
+				if(0 != (K_RU & userInput.holdKey))
+				{
+					normalizedDirection.y = __UP;
+				}
+				else if(0 != (K_RU & userInput.holdKey))
+				{
+					normalizedDirection.y = __DOWN;
+				} 
 			}
 
-			case kMessageKeypadHoldLeftDown:
+			if(0 != normalizedDirection.y)
 			{
-				normalizedDirection.y = __DOWN;
-				break;
+				Paddle::moveTowards(this, normalizedDirection);
 			}
+
+			break;
 		}
 	}
-	else
-	{
-		switch(message)
-		{
-			case kMessageKeypadHoldRightUp:
-			{
-				normalizedDirection.y = __UP;
-				break;
-			}
 
-			case kMessageKeypadHoldRightDown:
-			{
-				normalizedDirection.y = __DOWN;
-				break;
-			}
-		}
-	}
-
-
-	if(0 != normalizedDirection.y)
-	{
-		Paddle::moveTowards(this, normalizedDirection);
-		return true;
-	}
 
 	return false;
 }

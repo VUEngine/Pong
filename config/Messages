@@ -1,9 +1,6 @@
 {
     "_version": "1.0.0",
     "messages": {
-        "bYWuHK2INEznnWYy": "Keypad Hold Left Up",
-        "i4q8L9rAfckkqZqO": "Keypad Hold Right Down",
-        "mzfKm6QapnF2CUvy": "Keypad Hold Right Up",
-        "sT6VG9CEg4GlXgaU": "Keypad Hold Left Down"
+        "sT6VG9CEg4GlXgaU": "Keypad Hold Down"
     }
 }
