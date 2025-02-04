@@ -25,18 +25,24 @@
         "children": [],
         "colliders": [
             {
+                "checkForCollisions": true,
+                "displacement": {
+                    "parallax": 0,
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "layers": [
+                    "Kcw7MNbiPnV3qhmO"
+                ],
+                "layersToCheck": [
+                    "8mqpu6KL9PPdifyY"
+                ],
                 "name": "Collider",
-                "type": "Ball",
                 "pixelSize": {
                     "x": 8,
                     "y": 0,
                     "z": 0
-                },
-                "displacement": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0,
-                    "parallax": 0
                 },
                 "rotation": {
                     "x": 0,
@@ -48,13 +54,7 @@
                     "y": 1,
                     "z": 1
                 },
-                "checkForCollisions": true,
-                "layers": [
-                    "Kcw7MNbiPnV3qhmO"
-                ],
-                "layersToCheck": [
-                    "8mqpu6KL9PPdifyY"
-                ]
+                "type": "Ball"
             }
         ],
         "mutators": [
