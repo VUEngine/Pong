@@ -16,7 +16,7 @@
 #include <GameEvents.h>
 #include <Paddle.h>
 #include <Printer.h>
-//#include <RumbleEffects.h>
+#include <RumbleEffects.h>
 #include <RumbleManager.h>
 #include <SoundManager.h>
 #include <Sounds.h>
@@ -118,6 +118,7 @@ bool PongManager::onEvent(ListenerObject eventFirer __attribute__((unused)), uin
             if(NULL != __GET_CAST(Disk, eventFirer))
 			{
 				SoundManager::playSound(&PointSoundSpec,  NULL, kSoundPlaybackNormal, NULL);
+				RumbleManager::startEffect(&PointRumbleEffectSpec);
 
 				if(false && 0 < Disk::getPosition(eventFirer)->x)
 				{

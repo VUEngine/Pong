@@ -13,7 +13,7 @@
 
 #include <Body.h>
 #include <InGameTypes.h>
-//#include <RumbleEffects.h>
+#include <RumbleEffects.h>
 #include <RumbleManager.h>
 #include <SoundManager.h>
 #include <Sounds.h>
@@ -57,10 +57,12 @@ bool Disk::collisionStarts(const CollisionInformation* collisionInformation)
 
 			Body::setVelocity(this->body, &velocity);
 		}
+        // Intended fall through
 
 		case kTypeWall:
 		{
 			SoundManager::playSound(&BounceSoundSpec,  NULL, kSoundPlaybackNormal, NULL);
+			RumbleManager::startEffect(&BounceRumbleEffectSpec);
 		}
 		break;
 	}
