@@ -30,7 +30,7 @@ mutation class AIPaddle;
 
 void AIPaddle::update()
 {
-	Actor disk = Actor::safeCast(Container::getChildByName(this->parent, DISK_NAME, true));
+	Actor disk = Actor::safeCast(AIPaddle::getRelativeByName(this, DISK_NAME));
 
 	if(!isDeleted(disk))
 	{
