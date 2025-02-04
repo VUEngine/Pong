@@ -24,48 +24,8 @@
 #include "PongManager.h"
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-// CLASS' MACROS
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-#define SCORE_MULTIPLIER_THRESHOLD		 5
-#define BONUS_INCREMENT_DELAY			 100
-#define SCORE_MULTIPLIER_TO_ENABLE_BONUS 10
-
-#define PONG_NO_COMMAND					 0x00
-#define PONG_REGISTER_POINT				 0x78
-#define PONG_SYNC_WITH_REMOTE			 0x3D
-#define PONG_SEND_USER_INPUT			 0xAB
-#define PONG_REMOTE_GO_AWAY				 0x3C
-
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-// CLASS' DATA
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-typedef struct CondensedUserInput
-{
-	// Currently pressed key(s)
-	uint16 pressedKey;
-
-	// Released key(s)
-	uint16 releasedKey;
-
-	// Hold key(s)
-	uint16 holdKey;
-
-} CondensedUserInput;
-
-typedef struct RemotePlayerData
-{
-	uint32 command;
-
-	CondensedUserInput condensedUserInput;
-
-} RemotePlayerData;
-
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // CLASS' PUBLIC METHODS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
