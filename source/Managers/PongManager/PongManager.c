@@ -19,7 +19,7 @@
 //#include <RumbleEffects.h>
 #include <RumbleManager.h>
 #include <SoundManager.h>
-//#include <Sounds.h>
+#include <Sounds.h>
 
 #include "PongManager.h"
 
@@ -117,6 +117,7 @@ bool PongManager::onEvent(ListenerObject eventFirer __attribute__((unused)), uin
 		{
             if(NULL != __GET_CAST(Disk, eventFirer))
 			{
+				SoundManager::playSound(&PointSoundSpec,  NULL, kSoundPlaybackNormal, NULL);
 
 				if(false && 0 < Disk::getPosition(eventFirer)->x)
 				{

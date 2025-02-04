@@ -16,7 +16,7 @@
 //#include <RumbleEffects.h>
 #include <RumbleManager.h>
 #include <SoundManager.h>
-//#include <Sounds.h>
+#include <Sounds.h>
 
 #include "Disk.h"
 
@@ -56,6 +56,11 @@ bool Disk::collisionStarts(const CollisionInformation* collisionInformation)
 			velocity.y += yDisplacement;
 
 			Body::setVelocity(this->body, &velocity);
+		}
+
+		case kTypeWall:
+		{
+			SoundManager::playSound(&BounceSoundSpec,  NULL, kSoundPlaybackNormal, NULL);
 		}
 		break;
 	}
