@@ -11,11 +11,6 @@
 // INCLUDES
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-#include <Box.h>
-#include <InGameTypes.h>
-#include <Messages.h>
-#include <VUEngine.h>
-
 #include "Paddle.h"
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -33,32 +28,6 @@ mutation class Paddle;
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // CLASS' PUBLIC METHODS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-bool Paddle::handlePropagatedMessage(int32 message)
-{
-	/*
-	switch(message)
-	{
-		case kMessagePongResetPositions:
-
-			if(!Pong::isVersusMode(Pong::getInstance()))
-			{
-				Paddle::stopMovement(this, __ALL_AXIS);
-				Vector3D localPosition = this->localTransformation.position;
-				localPosition.y = 0;
-				Paddle::setLocalPosition(this, &localPosition);
-			}
-			break;
-	}
-*/
-	/* Returning false allows any other actor interested in the message to process it,
-	 * returning true will make that the propagation stops here
-	 */
-
-	return false;
-}
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 

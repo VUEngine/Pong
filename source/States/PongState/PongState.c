@@ -17,10 +17,7 @@
 #include <CameraEffectManager.h>
 #include <I18n.h>
 #include <Languages.h>
-#include <Paddle.h>
 #include <Singleton.h>
-#include <VIPManager.h>
-#include <VUEngine.h>
 
 #include "PongState.h"
 

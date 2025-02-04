@@ -24,7 +24,7 @@
 ///
 /// Inherits from Actor
 ///
-/// Implements a Pong ball.
+/// Implements a Pong disk.
 mutation class Disk : Actor
 {
 	/// Process a newly detected collision by one of the component colliders.

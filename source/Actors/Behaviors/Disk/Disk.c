@@ -12,21 +12,11 @@
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #include <Body.h>
-#include <CommunicationManager.h>
-#include <GameEvents.h>
 #include <InGameTypes.h>
-#include <MessageDispatcher.h>
-#include <Messages.h>
-#include <Optics.h>
-#include <ParticleSystem.h>
-#include <PongManager.h>
 //#include <RumbleEffects.h>
 #include <RumbleManager.h>
 #include <SoundManager.h>
 //#include <Sounds.h>
-#include <Telegram.h>
-#include <Utilities.h>
-#include <VUEngine.h>
 
 #include "Disk.h"
 

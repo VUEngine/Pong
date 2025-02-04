@@ -13,22 +13,13 @@
 
 #include <string.h>
 
-#include <CommunicationManager.h>
 #include <GameEvents.h>
-#include <KeypadManager.h>
-#include <MessageDispatcher.h>
-#include <Messages.h>
 #include <Paddle.h>
-#include <PongState.h>
 #include <Printer.h>
 //#include <RumbleEffects.h>
 #include <RumbleManager.h>
-#include <Singleton.h>
 #include <SoundManager.h>
 //#include <Sounds.h>
-#include <Utilities.h>
-#include <VUEngine.h>
-#include <VirtualList.h>
 
 #include "PongManager.h"
 
@@ -89,11 +80,11 @@ void PongManager::constructor(Stage stage)
 
 	PongManager::getReady(this, stage);
 
-	this->leftPaddle = 0;
-	this->rightPaddle = 0;
+	this->leftScore = 0;
+	this->rightScore = 0;
 
 	PongManager::printScore(this);
-	
+
 	Printer::addEventListener(Printer::getInstance(), ListenerObject::safeCast(this), kEventFontRewritten);
 }
 
@@ -198,17 +189,17 @@ void PongManager::getReady(Stage stage)
 
 		if(!isDeleted(this->disk))
 		{
-			Actor::addEventListener(this->disk, ListenerObject::safeCast(this), kEventActorDeleted);
+			Disk::addEventListener(this->disk, ListenerObject::safeCast(this), kEventActorDeleted);
 		}
 
 		if(!isDeleted(this->leftPaddle))
 		{
-			Actor::addEventListener(this->leftPaddle, ListenerObject::safeCast(this), kEventActorDeleted);
+			Paddle::addEventListener(this->leftPaddle, ListenerObject::safeCast(this), kEventActorDeleted);
 		}
 
 		if(!isDeleted(this->rightPaddle))
 		{
-			Actor::addEventListener(this->rightPaddle, ListenerObject::safeCast(this), kEventActorDeleted);
+			Paddle::addEventListener(this->rightPaddle, ListenerObject::safeCast(this), kEventActorDeleted);
 		}
 
 		Stage::addActorLoadingListener(stage, ListenerObject::safeCast(this));

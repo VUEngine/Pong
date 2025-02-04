@@ -19,7 +19,6 @@
 #include <ListenerObject.h>
 #include <Stage.h>
 #include <Paddle.h>
-#include <VirtualList.h>
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // CLASS' MACROS
