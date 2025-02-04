@@ -21,27 +21,10 @@
 #include "Disk.h"
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-// CLASS' MACROS
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-#define MAXIMUM_SPEED						   __I_TO_FIXED(2)
-
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // CLASS' DECLARATIONS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 mutation class Disk;
-
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-// CLASS' ATTRIBUTES
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-/*
- * This is used to generate a new angle each time that the ball starts to move.
- * For this to work, this has to be kept in sync between both VBs and is has to
- * persist between calls to startMovement.
- */
-static uint32 _randomSeed = 0;
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // CLASS' PUBLIC METHODS
@@ -99,18 +82,7 @@ void Disk::ready(bool recursive)
 
 void Disk::startMovement()
 {
-	int16 angle = 0;
-
-	if(0 == _randomSeed)
-	{
-		_randomSeed = 7;
-	}
-
-	_randomSeed ^= _randomSeed << 13;
-	_randomSeed ^= _randomSeed >> 17;
-	_randomSeed ^= _randomSeed << 5;
-
-	angle = Math::random(Math::randomSeed() + _randomSeed, 64) - 32;
+	int16 angle = Math::random(Math::randomSeed(), 64) - 32;
 
 	Vector3D velocity = 
 	{
@@ -119,7 +91,7 @@ void Disk::startMovement()
 		0
 	};
 
-	if(50 > Math::random(Math::randomSeed() + _randomSeed, 100))
+	if(50 > Math::random(Math::randomSeed(), 100))
 	{
 		velocity.x = -velocity.x;
 	}
