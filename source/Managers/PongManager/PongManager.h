@@ -14,19 +14,15 @@
 // INCLUDES
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-#include <Disk.h>
 #include <KeypadManager.h>
 #include <ListenerObject.h>
 #include <Stage.h>
-#include <Paddle.h>
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // CLASS' MACROS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #define DISK_NAME			"Disk"
-#define PADDLE_LEFT_NAME  	"LeftPD"
-#define PADDLE_RIGHT_NAME 	"RightPD"
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // CLASS' DECLARATION
@@ -40,10 +36,6 @@
 class PongManager : ListenerObject
 {
 	/// @privatesection
-
-	/// Paddles
-	Paddle leftPaddle;
-	Paddle rightPaddle;
 
 	/// Scoring
 	uint32 leftScore;
@@ -62,10 +54,6 @@ class PongManager : ListenerObject
 	/// @param eventCode: Code of the firing event
 	/// @return False if the listener has to be removed; true to keep it
 	override bool onEvent(ListenerObject eventFirer, uint16 eventCode);
-
-	/// Process the provided user input.
-	/// @param userInput: Struct with the current user input information
-	void processUserInput(const UserInput* userInput);
 }
 
 #endif

@@ -34,8 +34,8 @@ extern ActorSpec WallActorSpec;
 PositionedActorROMSpec PongStageActors[] =
 {	
 	{&DiskActorSpec, 				{0, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, DISK_NAME, NULL, NULL, false},
-	{&PaddleActorSpec, 				{-180, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, PADDLE_LEFT_NAME, NULL, NULL, false},
-	{&PaddleActorSpec, 				{180, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, PADDLE_RIGHT_NAME, NULL, NULL, false},
+	{&PaddleActorSpec, 				{-180, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, NULL, NULL, NULL, false},
+	{&PaddleActorSpec, 				{180, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, NULL, NULL, NULL, false},
 	{&WallActorSpec, 				{0, -120, 0}, {0, 0, 0}, {1, 1, 1}, 0, NULL, NULL, NULL, false},
 	{&WallActorSpec, 				{0, 120, 0}, {0, 0, 0}, {1, 1, 1}, 0, NULL, NULL, NULL, false},
 	{&LowPowerIndicatorActorSpec, 	{-192 + 8, 112 - 4, 0}, {0, 0, 0}, {1, 1, 1}, 0, NULL, NULL, NULL, false},

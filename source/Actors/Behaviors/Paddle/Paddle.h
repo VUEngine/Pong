@@ -27,9 +27,10 @@
 /// Implements a Pong paddle.
 mutation class Paddle : Actor
 {
-	/// Move the paddle towards the provided direction.
-	/// @param direction: Direction towards which to move the paddle
-	void moveTowards(NormalizedDirection direction);
+	/// Default interger message handler for propagateMessage
+	/// @param message: Propagated integer message
+	/// @return True if the propagation must stop; false if the propagation must reach other containers
+	override bool handlePropagatedMessage(int32 message);
 }
 
 #endif

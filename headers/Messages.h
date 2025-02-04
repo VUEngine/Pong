@@ -15,6 +15,12 @@
 // DEFINITIONS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-
+enum Messages
+{
+	kMessageKeypadHoldLeftDown = kMessageLastEngine + 1,
+	kMessageKeypadHoldLeftUp,
+	kMessageKeypadHoldRightDown,
+	kMessageKeypadHoldRightUp,
+};
 
 #endif

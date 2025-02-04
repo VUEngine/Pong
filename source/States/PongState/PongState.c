@@ -17,6 +17,7 @@
 #include <CameraEffectManager.h>
 #include <I18n.h>
 #include <Languages.h>
+#include <Messages.h>
 #include <Singleton.h>
 
 #include "PongState.h"
@@ -83,9 +84,28 @@ void PongState::exit(void* owner __attribute__((unused)))
 
 void PongState::processUserInput(const UserInput* userInput)
 {
-	if(!isDeleted(this->pongManager))
+	uint32 message = 0;
+
+	if(K_LU & userInput->holdKey)
 	{
-		PongManager::processUserInput(this->pongManager, userInput);
+		message = kMessageKeypadHoldLeftUp;
+	}
+	else if(K_LD & userInput->holdKey)
+	{
+		message = kMessageKeypadHoldLeftDown;
+	}
+	else if(K_RU & userInput->holdKey)
+	{
+		message = kMessageKeypadHoldRightUp;
+	}
+	else if(K_RD & userInput->holdKey)
+	{
+		message = kMessageKeypadHoldRightDown;
+	}
+
+	if(0 != message)
+	{
+		PongState::propagateMessage(this, message);
 	}
 }
 
