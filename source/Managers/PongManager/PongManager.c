@@ -98,12 +98,9 @@ bool PongManager::onEvent(ListenerObject eventFirer __attribute__((unused)), uin
 
 		case kEventActorCreated:
 		{
-			if(__GET_CAST(Actor, eventFirer))
-            {
-				if(0 == strcmp(DISK_NAME, Actor::getName(eventFirer)))
-				{
-					Actor::addEventListener(eventFirer, ListenerObject::safeCast(this), kEventActorDeleted);
-				}
+			if(0 == strcmp(DISK_NAME, Actor::getName(eventFirer)))
+			{
+				Actor::addEventListener(eventFirer, ListenerObject::safeCast(this), kEventActorDeleted);
 			}
 
 			return true;
