@@ -13,10 +13,6 @@
 
 #include <string.h>
 
-#include <Camera.h>
-#include <CameraEffectManager.h>
-#include <I18n.h>
-#include <Languages.h>
 #include <Messages.h>
 #include <Singleton.h>
 
