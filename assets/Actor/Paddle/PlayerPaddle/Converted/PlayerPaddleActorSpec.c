@@ -7,27 +7,27 @@
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #include <Actor.h>
-#include <AIPaddle.h>
 #include <BgmapSprite.h>
 #include <Body.h>
 #include <Box.h>
 #include <ColliderLayers.h>
 #include <InGameTypes.h>
 #include <Mutator.h>
+#include <PlayerPaddle.h>
 #include <Texture.h>
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // DECLARATIONS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-extern uint32 AIPaddleActorPaddleTiles[];
-extern uint16 AIPaddleActorPaddleMap[];
+extern uint32 PlayerPaddleActorPaddleTiles[];
+extern uint16 PlayerPaddleActorPaddleMap[];
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // SPRITES
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-CharSetROMSpec AIPaddleSprite1CharsetSpec =
+CharSetROMSpec PlayerPaddleSprite1CharsetSpec =
 {
 	// Number of CHARs in function of the number of frames to load at the same time
 	2,
@@ -39,19 +39,19 @@ CharSetROMSpec AIPaddleSprite1CharsetSpec =
 	true,
 
 	// Tiles array
-	AIPaddleActorPaddleTiles,
+	PlayerPaddleActorPaddleTiles,
 
 	// Frame offsets array
 	NULL
 };
 
-TextureROMSpec AIPaddleSprite1TextureSpec =
+TextureROMSpec PlayerPaddleSprite1TextureSpec =
 {
 	// Pointer to the char spec that the texture uses
-	(CharSetSpec*)&AIPaddleSprite1CharsetSpec,
+	(CharSetSpec*)&PlayerPaddleSprite1CharsetSpec,
 
 	// Pointer to the map array that defines how to use the tiles from the char set
-	AIPaddleActorPaddleMap,
+	PlayerPaddleActorPaddleMap,
 
 	// Horizontal size in tiles of the texture (max. 64)
 	1,
@@ -78,7 +78,7 @@ TextureROMSpec AIPaddleSprite1TextureSpec =
 	false
 };
 
-BgmapSpriteROMSpec AIPaddleSprite1SpriteSpec =
+BgmapSpriteROMSpec PlayerPaddleSprite1SpriteSpec =
 {
 	{
 		// VisualComponent
@@ -97,7 +97,7 @@ BgmapSpriteROMSpec AIPaddleSprite1SpriteSpec =
 		},
 
 		// Spec for the texture to display
-		(TextureSpec*)&AIPaddleSprite1TextureSpec,
+		(TextureSpec*)&PlayerPaddleSprite1TextureSpec,
 
 		// Transparency mode (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -121,7 +121,7 @@ BgmapSpriteROMSpec AIPaddleSprite1SpriteSpec =
 // COLLIDERS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-ColliderROMSpec AIPaddleCollider1ColliderSpec = 
+ColliderROMSpec PlayerPaddleCollider1ColliderSpec = 
 {
 	// Component
 	{
@@ -139,10 +139,10 @@ ColliderROMSpec AIPaddleCollider1ColliderSpec =
 	{0, 0, 0, 0},
 
 	// Rotation (x, y, z)
-	{ 0, 0, 0 },
+	{0, 0, 0},
 
 	// Scale (x, y, z)
-	{ __F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f) },
+	{__F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f)},
 
 	// If true this collider checks for collisions against other colliders
 	true,
@@ -158,7 +158,7 @@ ColliderROMSpec AIPaddleCollider1ColliderSpec =
 // BODY
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-BodyROMSpec AIPaddleBodySpec =
+BodyROMSpec PlayerPaddleBodySpec =
 {
 	// Component
 	{
@@ -198,7 +198,7 @@ BodyROMSpec AIPaddleBodySpec =
 // MUTATORS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-MutatorROMSpec AIPaddleMutator1MutatorSpec =
+MutatorROMSpec PlayerPaddleMutator1MutatorSpec =
 {
 	{
 		// Allocator
@@ -209,7 +209,7 @@ MutatorROMSpec AIPaddleMutator1MutatorSpec =
 	},
 
 	// Mutation target class
-	class(AIPaddle),
+	class(PlayerPaddle),
 
 	// Enabled
 	true
@@ -219,22 +219,22 @@ MutatorROMSpec AIPaddleMutator1MutatorSpec =
 // ACTOR
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-ComponentSpec* const AIPaddleComponentSpecs[] = 
+ComponentSpec* const PlayerPaddleComponentSpecs[] = 
 {
-	(ComponentSpec*)&AIPaddleSprite1SpriteSpec,
-	(ComponentSpec*)&AIPaddleCollider1ColliderSpec,
-	(ComponentSpec*)&AIPaddleBodySpec,
-	(ComponentSpec*)&AIPaddleMutator1MutatorSpec,
+	(ComponentSpec*)&PlayerPaddleSprite1SpriteSpec,
+	(ComponentSpec*)&PlayerPaddleCollider1ColliderSpec,
+	(ComponentSpec*)&PlayerPaddleBodySpec,
+	(ComponentSpec*)&PlayerPaddleMutator1MutatorSpec,
 	NULL
 };
 
-ActorROMSpec AIPaddleActorSpec =
+ActorROMSpec PlayerPaddleActorSpec =
 {
 	// Class allocator
 	__TYPE(Actor),
 
 	// Component specs
-	(ComponentSpec**)AIPaddleComponentSpecs,
+	(ComponentSpec**)PlayerPaddleComponentSpecs,
 
 	// Children specs
 	NULL,
@@ -251,4 +251,5 @@ ActorROMSpec AIPaddleActorSpec =
 
 	// Animation to play automatically
 	NULL
+	
 };

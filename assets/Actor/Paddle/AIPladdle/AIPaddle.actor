@@ -1,5 +1,5 @@
 {
-    "_id": "rNwkYDVECZ7E8VQk",
+    "_id": "LXw6B9zDDFWOVMrJ",
     "_version": "1.0.0",
     "animations": {
         "default": 0,
@@ -59,7 +59,8 @@
         ],
         "mutators": [
             {
-                "name": "PlayerPaddle"
+                "mutationClass": "AIPaddle",
+                "name": "AIPaddle"
             }
         ],
         "sprites": [
@@ -86,54 +87,54 @@
                         }
                     ]
                 },
-                "bgmapMode": "Bgmap",
-                "colorMode": 0,
-                "compression": "none",
-                "displacement": {
-                    "parallax": 0,
-                    "x": 0,
-                    "y": 0,
-                    "z": 0
-                },
-                "displayMode": "Mono",
-                "displays": "ON",
+                "name": "Paddle",
+                "sourceType": "image",
                 "imageProcessingSettings": {
                     "colorDistanceFormula": "euclidean",
                     "imageQuantizationAlgorithm": "nearest",
                     "minimumColorDistanceToDither": 0,
                     "serpentine": false
                 },
+                "bgmapMode": "Bgmap",
+                "colorMode": 0,
+                "displayMode": "Mono",
+                "displays": "ON",
+                "transparency": "None",
+                "displacement": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "parallax": 0
+                },
                 "manipulationFunction": "",
-                "name": "Paddle",
                 "optimizeTiles": true,
-                "section": "rom",
-                "sourceType": "image",
                 "texture": {
                     "files": [
                         "Paddle.png"
                     ],
                     "files2": [],
-                    "flip": {
-                        "x": false,
-                        "y": false
-                    },
                     "padding": {
                         "x": 0,
                         "y": 0
                     },
                     "palette": 0,
                     "recycleable": false,
+                    "flip": {
+                        "x": false,
+                        "y": false
+                    },
                     "repeat": {
                         "mode": "1x1",
+                        "x": false,
+                        "y": false,
                         "size": {
                             "x": 0,
                             "y": 0
-                        },
-                        "x": false,
-                        "y": false
+                        }
                     }
                 },
-                "transparency": "None"
+                "section": "rom",
+                "compression": "none"
             }
         ],
         "wireframes": []

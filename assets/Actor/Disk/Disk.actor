@@ -60,6 +60,7 @@
         ],
         "mutators": [
             {
+                "mutationClass": "Disk",
                 "name": "Disk"
             }
         ],

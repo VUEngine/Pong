@@ -7,11 +7,11 @@
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #include <Actor.h>
-#include <Ball.h>
+#include <AIPaddle.h>
 #include <BgmapSprite.h>
 #include <Body.h>
+#include <Box.h>
 #include <ColliderLayers.h>
-#include <Disk.h>
 #include <InGameTypes.h>
 #include <Mutator.h>
 #include <Texture.h>
@@ -20,17 +20,17 @@
 // DECLARATIONS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-extern uint32 DiskActorDiskTiles[];
-extern uint16 DiskActorDiskMap[];
+extern uint32 AIPaddleActorPaddleTiles[];
+extern uint16 AIPaddleActorPaddleMap[];
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // SPRITES
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-CharSetROMSpec DiskSprite1CharsetSpec =
+CharSetROMSpec AIPaddleSprite1CharsetSpec =
 {
 	// Number of CHARs in function of the number of frames to load at the same time
-	1,
+	2,
 
 	// Whether it is shared or not
 	true,
@@ -39,25 +39,25 @@ CharSetROMSpec DiskSprite1CharsetSpec =
 	true,
 
 	// Tiles array
-	DiskActorDiskTiles,
+	AIPaddleActorPaddleTiles,
 
 	// Frame offsets array
 	NULL
 };
 
-TextureROMSpec DiskSprite1TextureSpec =
+TextureROMSpec AIPaddleSprite1TextureSpec =
 {
 	// Pointer to the char spec that the texture uses
-	(CharSetSpec*)&DiskSprite1CharsetSpec,
+	(CharSetSpec*)&AIPaddleSprite1CharsetSpec,
 
 	// Pointer to the map array that defines how to use the tiles from the char set
-	DiskActorDiskMap,
+	AIPaddleActorPaddleMap,
 
 	// Horizontal size in tiles of the texture (max. 64)
 	1,
 
 	// Vertical size in tiles of the texture (max. 64)
-	1,
+	4,
 
 	// padding for affine/hbias transformations
 	{0, 0},
@@ -78,7 +78,7 @@ TextureROMSpec DiskSprite1TextureSpec =
 	false
 };
 
-BgmapSpriteROMSpec DiskSprite1SpriteSpec =
+BgmapSpriteROMSpec AIPaddleSprite1SpriteSpec =
 {
 	{
 		// VisualComponent
@@ -97,7 +97,7 @@ BgmapSpriteROMSpec DiskSprite1SpriteSpec =
 		},
 
 		// Spec for the texture to display
-		(TextureSpec*)&DiskSprite1TextureSpec,
+		(TextureSpec*)&AIPaddleSprite1TextureSpec,
 
 		// Transparency mode (__TRANSPARENCY_NONE, __TRANSPARENCY_EVEN or __TRANSPARENCY_ODD)
 		__TRANSPARENCY_NONE,
@@ -121,44 +121,44 @@ BgmapSpriteROMSpec DiskSprite1SpriteSpec =
 // COLLIDERS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-ColliderROMSpec DiskCollider1ColliderSpec = 
+ColliderROMSpec AIPaddleCollider1ColliderSpec = 
 {
 	// Component
 	{
 		// Allocator
-		__TYPE(Ball),
+		__TYPE(Box),
 
 		// Component type
 		kColliderComponent
 	},
 
 	// Size (x, y, z)
-	{8, 0, 0},
+	{8, 32, 16},
 
 	// Displacement (x, y, z, p)
 	{0, 0, 0, 0},
 
 	// Rotation (x, y, z)
-	{ __F_TO_FIX7_9(0.000f), __F_TO_FIX7_9(0.000f), __F_TO_FIX7_9(0.000f) },
+	{0, 0, 0},
 
 	// Scale (x, y, z)
-	{ __F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f) },
+	{__F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f), __F_TO_FIX7_9(1.000f)},
 
 	// If true this collider checks for collisions against other colliders
 	true,
 
 	// Layers in which I live
-	kLayerDisk,
+	kLayerPaddle,
 
 	// Layers to ignore when checking for collisions
-	kLayerAll & ~(kLayerPaddle | kLayerWall)
+	kLayerAll & ~(kLayerWall)
 };
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // BODY
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-BodyROMSpec DiskBodySpec =
+BodyROMSpec AIPaddleBodySpec =
 {
 	// Component
 	{
@@ -173,10 +173,10 @@ BodyROMSpec DiskBodySpec =
 	true,
 
 	// Mass
-	__F_TO_FIX10_6(0.100f),
+	__F_TO_FIX10_6(0.550f),
 
 	// Friction
-	__F_TO_FIX10_6(1.000f),
+	__F_TO_FIX10_6(0.250f),
 
 	// Bounciness
 	__F_TO_FIX10_6(1.000f),
@@ -185,7 +185,7 @@ BodyROMSpec DiskBodySpec =
 	{ __I_TO_FIXED(0), __I_TO_FIXED(0), __I_TO_FIXED(0) },
 
 	// Maximum speed
-	__I_TO_FIX10_6(3),
+	__I_TO_FIX10_6(8),
 
 	// Axises on which the body is subject to gravity
 	__NO_AXIS,
@@ -198,7 +198,7 @@ BodyROMSpec DiskBodySpec =
 // MUTATORS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-MutatorROMSpec DiskMutator1MutatorSpec =
+MutatorROMSpec AIPaddleMutator1MutatorSpec =
 {
 	{
 		// Allocator
@@ -209,7 +209,7 @@ MutatorROMSpec DiskMutator1MutatorSpec =
 	},
 
 	// Mutation target class
-	class(Disk),
+	class(AIPaddle),
 
 	// Enabled
 	true
@@ -219,22 +219,22 @@ MutatorROMSpec DiskMutator1MutatorSpec =
 // ACTOR
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-ComponentSpec* const DiskComponentSpecs[] = 
+ComponentSpec* const AIPaddleComponentSpecs[] = 
 {
-	(ComponentSpec*)&DiskSprite1SpriteSpec,
-	(ComponentSpec*)&DiskCollider1ColliderSpec,
-	(ComponentSpec*)&DiskBodySpec,
-	(ComponentSpec*)&DiskMutator1MutatorSpec,
+	(ComponentSpec*)&AIPaddleSprite1SpriteSpec,
+	(ComponentSpec*)&AIPaddleCollider1ColliderSpec,
+	(ComponentSpec*)&AIPaddleBodySpec,
+	(ComponentSpec*)&AIPaddleMutator1MutatorSpec,
 	NULL
 };
 
-ActorROMSpec DiskActorSpec =
+ActorROMSpec AIPaddleActorSpec =
 {
 	// Class allocator
 	__TYPE(Actor),
 
 	// Component specs
-	(ComponentSpec**)DiskComponentSpecs,
+	(ComponentSpec**)AIPaddleComponentSpecs,
 
 	// Children specs
 	NULL,
@@ -247,8 +247,9 @@ ActorROMSpec DiskActorSpec =
 	{0, 0, 0},
 
 	// Actor's in-game type
-	kTypeDisk,
+	kTypePaddle,
 
 	// Animation to play automatically
 	NULL
+	
 };
