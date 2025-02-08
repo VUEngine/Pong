@@ -1,6 +1,6 @@
 {
     "_id": "DBPJuEZXjiRfTlQA",
-    "_version": "1.0.0",
+    "_version": "0.6.0",
     "animations": {
         "default": 0,
         "multiframe": false,
@@ -105,6 +105,7 @@
                     "minimumColorDistanceToDither": 0,
                     "serpentine": false
                 },
+                "isAnimated": true,
                 "manipulationFunction": "",
                 "name": "Disk",
                 "optimizeTiles": true,
@@ -141,7 +142,6 @@
         "wireframes": []
     },
     "extraProperties": {
-        "customAllocator": "",
         "enabled": false,
         "extraInfo": "",
         "pixelSize": {
@@ -151,6 +151,11 @@
         }
     },
     "inGameType": "UdKB8bl2ZbtVxd3q",
+    "logic": {
+        "configuration": {},
+        "customAllocator": "",
+        "enabled": false
+    },
     "sprites": {
         "type": "Bgmap"
     }

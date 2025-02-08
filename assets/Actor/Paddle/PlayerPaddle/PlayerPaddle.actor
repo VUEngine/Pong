@@ -1,6 +1,6 @@
 {
     "_id": "rNwkYDVECZ7E8VQk",
-    "_version": "1.0.0",
+    "_version": "0.6.0",
     "animations": {
         "default": 0,
         "multiframe": false,
@@ -104,6 +104,7 @@
                     "minimumColorDistanceToDither": 0,
                     "serpentine": false
                 },
+                "isAnimated": true,
                 "manipulationFunction": "",
                 "name": "Paddle",
                 "optimizeTiles": true,
@@ -140,7 +141,6 @@
         "wireframes": []
     },
     "extraProperties": {
-        "customAllocator": "",
         "enabled": false,
         "extraInfo": "",
         "pixelSize": {
@@ -150,6 +150,11 @@
         }
     },
     "inGameType": "5mZTdX1TSzYcLpaf",
+    "logic": {
+        "configuration": {},
+        "customAllocator": "",
+        "enabled": false
+    },
     "sprites": {
         "type": "Bgmap"
     }

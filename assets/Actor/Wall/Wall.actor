@@ -1,6 +1,6 @@
 {
     "_id": "9Pi57rOzE6M1eGEx",
-    "_version": "1.0.0",
+    "_version": "0.6.0",
     "animations": {
         "default": 0,
         "multiframe": false,
@@ -60,7 +60,6 @@
         "wireframes": []
     },
     "extraProperties": {
-        "customAllocator": "",
         "enabled": false,
         "extraInfo": "",
         "pixelSize": {
@@ -70,6 +69,11 @@
         }
     },
     "inGameType": "xjykxRfcSgt20Qyd",
+    "logic": {
+        "configuration": {},
+        "customAllocator": "",
+        "enabled": false
+    },
     "sprites": {
         "type": "Bgmap"
     }
