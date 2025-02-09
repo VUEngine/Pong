@@ -69,9 +69,12 @@ StageROMSpec TitleScreenStageSpec =
 
 	// Timer config
 	{
-		__TIMER_20US,
-		160,
-		kUS
+		// Timer's resolution (__TIMER_100US or __TIMER_20US)
+		__TIMER_100US,
+		// Target elapsed time between timer interrupts
+		10,
+		// Timer interrupt's target time units
+		kMS
 	},
 
 	// Sound config
