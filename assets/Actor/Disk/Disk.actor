@@ -12,7 +12,7 @@
         "friction": 1,
         "gravityAxes": [],
         "mass": 0.1,
-        "maximumSpeed": 3,
+        "maximumSpeed": 5,
         "maximumVelocity": {
             "x": 0,
             "y": 0,
