@@ -63,7 +63,7 @@ TextureROMSpec LogoSprite1TextureSpec =
 	// Palette index to use by the graphical data (0 - 3)
 	0,
 
-	// Flag to recyble the texture with a different map
+	// Flag to recycle the texture with a different map
 	false,
 
 	// Flag to vertically flip the image
@@ -104,7 +104,7 @@ BgmapSpriteROMSpec LogoSprite1SpriteSpec =
 	// Flag to indicate in which display to show the texture (__WORLD_ON, __WORLD_LON or __WORLD_RON)
 	__WORLD_ON,
 
-	// The display mode (__WORLD_BGMAP, __WORLD_AFFINE, __WORLD_OBJECT or __WORLD_HBIAS)
+	// The display mode (__WORLD_BGMAP, __WORLD_AFFINE or __WORLD_HBIAS)
 	__WORLD_BGMAP,
 	
 	// Pointer to affine/hbias manipulation function
