@@ -40,7 +40,7 @@ void PongState::enter(void* owner __attribute__((unused)))
 	// Create the Pong game controller
 	this->pongManager = new PongManager(this->stage);
 
-	// Start clocks to start animations
+	// Start clocks to start animations, physics, etc
 	PongState::startClocks(this);
 
 	// Enable user input
