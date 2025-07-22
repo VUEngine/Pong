@@ -44,9 +44,9 @@ const uint8 BounceSoundTrack1SxEV1[] =
 	0x01,
 };
 
-const int8* const BounceSoundTrack1SxRAM[] =
+const WaveformData* const BounceSoundTrack1SxRAM[] =
 {
-	SquareWaveForm,
+	&SquareWaveForm,
 };
 
 const uint8 BounceSoundTrack1SxSWP[] =
@@ -96,7 +96,7 @@ SoundTrackROMSpec BounceSoundTrack1 =
 	(uint8*)BounceSoundTrack1SxEV1,
 
 	/// SxRAM pointers
-	(int8**)BounceSoundTrack1SxRAM,
+	(WaveformData**)BounceSoundTrack1SxRAM,
 
 	/// SxSWP values
 	(uint8*)BounceSoundTrack1SxSWP,
