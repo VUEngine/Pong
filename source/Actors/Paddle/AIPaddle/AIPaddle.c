@@ -37,12 +37,14 @@ bool AIPaddle::handlePropagatedMessage(int32 message)
 	{
 		case kMessageVersusModePlayer1:
 		{
+			AIPaddle::resetPosition(this);
 			AIPaddle::mutateTo(this, RemotePaddle::getClass());
 			return false;
 		}
 
 		case kMessageVersusModePlayer2:
 		{
+			AIPaddle::resetPosition(this);
 			AIPaddle::mutateTo(this, PlayerPaddle::getClass());
 			return false;
 		}
@@ -79,6 +81,22 @@ void AIPaddle::update()
 			AIPaddle::applyForce(this, &force, true);
 		}
 	}
+}
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+// CLASS' PRIVATE METHODS
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+void AIPaddle::resetPosition()
+{
+	AIPaddle::stopMovement(this, __ALL_AXIS);
+	Vector3D localPosition = this->localTransformation.position;
+	localPosition.y = 0;
+	AIPaddle::setLocalPosition(this, &localPosition);
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
