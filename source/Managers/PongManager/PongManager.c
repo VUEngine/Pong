@@ -13,6 +13,7 @@
 
 #include <string.h>
 
+#include <CommunicationManager.h>
 #include <GameEvents.h>
 #include <KeypadManager.h>
 #include <Messages.h>
@@ -55,6 +56,9 @@ void PongManager::constructor(Stage stage)
 	}
 
 	Printer::addEventListener(Printer::getInstance(), ListenerObject::safeCast(this), kEventFontRewritten);
+
+	// Enable comms
+	CommunicationManager::enableCommunications(CommunicationManager::getInstance(), ListenerObject::safeCast(this));
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -71,6 +75,12 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 {
 	switch(eventCode)
 	{
+		case kEventCommunicationsConnected:
+		{
+			PongManager::startVersusMode(this);
+			return false;
+		}
+
 		case kEventFontRewritten:
 		{
 			PongManager::printScore(this);
@@ -116,7 +126,7 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-void PongManager::startVersusMode(bool isPlayerOne)
+void PongManager::startVersusMode()
 {	
 	// Reprint the score
 	this->leftScore = 0;
@@ -126,6 +136,8 @@ void PongManager::startVersusMode(bool isPlayerOne)
 
 	// Reset random seed in multiplayer mode so both machines are completely in sync
 	Math::resetRandomSeed();
+
+	bool isPlayerOne = CommunicationManager::isMaster(CommunicationManager::getInstance());
 
 	// Propagate the message about the versus mode player assigned to the local system
 	Stage::propagateMessage(this->stage, Container::onPropagatedMessage, isPlayerOne ? kMessageVersusModePlayer1 : kMessageVersusModePlayer2);

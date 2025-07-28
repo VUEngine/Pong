@@ -57,10 +57,6 @@ class PongManager : ListenerObject
 	/// @param eventCode: Code of the firing event
 	/// @return False if the listener has to be removed; true to keep it
 	override bool onEvent(ListenerObject eventFirer, uint16 eventCode);
-
-	/// Start versus mode.
-	/// @param isPlayerOne: If true, this system is player one (left)
-	void startVersusMode(bool isPlayerOne);
 }
 
 #endif

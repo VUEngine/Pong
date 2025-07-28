@@ -48,12 +48,6 @@ singleton class PongState : GameState
 	/// @param owner: Object that is exiting this state
 	override void exit(void* owner);
 
-	/// Process an event that the instance is listen for.
-	/// @param eventFirer: ListenerObject that signals the event
-	/// @param eventCode: Code of the firing event
-	/// @return False if the listener has to be removed; true to keep it
-	override bool onEvent(ListenerObject eventFirer, uint16 eventCode);
-
 	/// Process the provided user input.
 	/// @param userInput: Struct with the current user input information
 	override void processUserInput(const UserInput* userInput);
