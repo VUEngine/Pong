@@ -41,6 +41,9 @@ class PongManager : ListenerObject
 	uint32 leftScore;
 	uint32 rightScore;
 
+	//// Cache of the stage
+	Stage stage;
+
 	/// @publicsection
 
 	/// Class' constructor
@@ -54,6 +57,10 @@ class PongManager : ListenerObject
 	/// @param eventCode: Code of the firing event
 	/// @return False if the listener has to be removed; true to keep it
 	override bool onEvent(ListenerObject eventFirer, uint16 eventCode);
+
+	/// Start versus mode.
+	/// @param isPlayerOne: If true, this system is player one (left)
+	void startVersusMode(bool isPlayerOne);
 }
 
 #endif

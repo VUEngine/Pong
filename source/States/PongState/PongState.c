@@ -69,7 +69,7 @@ void PongState::exit(void* owner __attribute__((unused)))
 
 void PongState::processUserInput(const UserInput* userInput)
 {
-	if(0 != userInput->holdKey)
+	if(0 != userInput->dummyKey)
 	{
 		PongState::propagateMessage(this, kMessageKeypadHoldDown);
 	}
@@ -107,14 +107,9 @@ bool PongState::onEvent(ListenerObject eventFirer, uint16 eventCode)
 	{
 		case kEventCommunicationsConnected:
 		{
-			if(CommunicationManager::isMaster(CommunicationManager::getInstance()))
+			if(!isDeleted(this->pongManager))
 			{
-				PongState::propagateMessage(this, kMessageVersusModePlayer1);
-			}
-			else
-			{
-
-				PongState::propagateMessage(this, kMessageVersusModePlayer2);
+				PongManager::startVersusMode(this->pongManager, CommunicationManager::isMaster(CommunicationManager::getInstance()));
 			}
 
 			return false;

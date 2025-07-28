@@ -14,6 +14,8 @@
 #include <string.h>
 
 #include <GameEvents.h>
+#include <KeypadManager.h>
+#include <Messages.h>
 #include <Printer.h>
 #include <RumbleEffects.h>
 #include <RumbleManager.h>
@@ -35,6 +37,8 @@ void PongManager::constructor(Stage stage)
 
 	this->leftScore = 0;
 	this->rightScore = 0;
+
+	this->stage = stage;
 
 	PongManager::printScore(this);
 
@@ -108,6 +112,25 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 	}
 
 	return Base::onEvent(this, eventFirer, eventCode);
+}
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+void PongManager::startVersusMode(bool isPlayerOne)
+{	
+	// Reset random seed in multiplayer mode so both machines are completely in sync
+	Math::resetRandomSeed();
+
+	this->leftScore = 0;
+	this->rightScore = 0;
+
+	PongManager::printScore(this);
+
+	Stage::propagateMessage(this->stage, Container::onPropagatedMessage, isPlayerOne ? kMessageVersusModePlayer1 : kMessageVersusModePlayer2);
+
+	// Since we are using the method processUserInput to sync both system, 
+	// we must make sure that it is called regardless of local input
+	KeypadManager::enableDummyKey();
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
