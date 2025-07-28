@@ -14,6 +14,7 @@
 #include <Body.h>
 #include <KeypadManager.h>
 #include <Messages.h>
+#include <RemotePaddle.h>
 
 #include "PlayerPaddle.h"
 
@@ -33,6 +34,12 @@ bool PlayerPaddle::handlePropagatedMessage(int32 message)
 {
 	switch(message)
 	{
+		case kMessageVersusModePlayer2:
+		{
+			PlayerPaddle::mutateTo(this, RemotePaddle::getClass());
+			return false;
+		}
+
 		case kMessageKeypadHoldDown:
 		{
 			if(!isDeleted(this->body))

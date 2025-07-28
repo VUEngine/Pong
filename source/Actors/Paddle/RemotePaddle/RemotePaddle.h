@@ -1,25 +1,36 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////  THIS FILE WAS AUTO-GENERATED - DO NOT EDIT  ///////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+ * VUEngine Showcase
+ *
+ * © Jorge Eremiev <jorgech3@gmail.com> and Christian Radke <c.radke@posteo.de>
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
 
-#ifndef MESSAGES_H_
-#define MESSAGES_H_
+#ifndef REMOTE_PADDLE_H_
+#define REMOTE_PADDLE_H_
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // INCLUDES
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-#include <Constants.h>
+#include <Actor.h>
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-// DEFINITIONS
+// CLASS' DECLARATION
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-enum Messages
+/// Class RemotePaddle
+///
+/// Extension of Actor
+///
+/// Implements a Pong paddle controlled by the remote player.
+mutation class RemotePaddle : Actor
 {
-	kMessageKeypadHoldDown = kMessageLastEngine + 1,
-	kMessageVersusModePlayer1,
-	kMessageVersusModePlayer2,
-};
+	/// Default interger message handler for propagateMessage
+	/// @param message: Propagated integer message
+	/// @return True if the propagation must stop; false if the propagation must reach other containers
+	override bool handlePropagatedMessage(int32 message);
+}
 
 #endif

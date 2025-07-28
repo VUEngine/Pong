@@ -12,18 +12,16 @@
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #include <Body.h>
+#include <KeypadManager.h>
 #include <Messages.h>
-#include <PongManager.h>
-#include <PlayerPaddle.h>
-#include <RemotePaddle.h>
 
-#include "AIPaddle.h"
+#include "RemotePaddle.h"
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // CLASS' DECLARATIONS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-mutation class AIPaddle;
+mutation class RemotePaddle;
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // CLASS' PUBLIC METHODS
@@ -31,54 +29,38 @@ mutation class AIPaddle;
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-bool AIPaddle::handlePropagatedMessage(int32 message)
+bool RemotePaddle::handlePropagatedMessage(int32 message)
 {
 	switch(message)
 	{
-		case kMessageVersusModePlayer1:
+		case kMessageKeypadHoldDown:
 		{
-			AIPaddle::mutateTo(this, RemotePaddle::getClass());
-			return false;
-		}
+			break;
+			if(!isDeleted(this->body))
+			{
+				UserInput userInput = KeypadManager::getUserInput();
 
-		case kMessageVersusModePlayer2:
-		{
-			AIPaddle::mutateTo(this, PlayerPaddle::getClass());
-			return false;
+				fixed_t forceMagnitude = 0;
+				
+				if(0 != (K_LU & userInput.holdKey))
+				{
+					forceMagnitude = -__FIXED_MULT(Body::getMass(this->body), Body::getMaximumSpeed(this->body));
+				}
+				else if(0 != (K_LD & userInput.holdKey))
+				{
+					forceMagnitude = __FIXED_MULT(Body::getMass(this->body), Body::getMaximumSpeed(this->body));
+				}
+
+				Vector3D force = {0, forceMagnitude, 0};
+
+				RemotePaddle::applyForce(this, &force, true);
+			}
+
+			return true;
 		}
 	}
 
 	return false;
-}
-
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-void AIPaddle::update()
-{
-	Actor disk = Actor::safeCast(AIPaddle::getRelativeByName(this, DISK_NAME));
-
-	if(!isDeleted(disk))
-	{
-		fixed_t forceMagnitude = 0;
-
-		fixed_t diskYPosition = Actor::getPosition(disk)->y;
-
-		if(__PIXELS_TO_METERS(2) < __ABS(diskYPosition - this->transformation.position.y))
-		{
-			if(diskYPosition < this->transformation.position.y)
-			{
-				forceMagnitude = -__FIXED_MULT(Body::getMass(this->body), Body::getMaximumSpeed(this->body));
-			}
-			else
-			{
-				forceMagnitude = __FIXED_MULT(Body::getMass(this->body), Body::getMaximumSpeed(this->body));
-			}
-
-			Vector3D force = {0, forceMagnitude, 0};
-
-			AIPaddle::applyForce(this, &force, true);
-		}
-	}
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————

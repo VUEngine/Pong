@@ -13,6 +13,7 @@
 
 #include <string.h>
 
+#include <CommunicationManager.h>
 #include <Messages.h>
 #include <Singleton.h>
 
@@ -45,6 +46,9 @@ void PongState::enter(void* owner __attribute__((unused)))
 
 	// Enable user input
 	KeypadManager::enable();
+
+	// Enable comms	
+	CommunicationManager::enableCommunications(CommunicationManager::getInstance(), ListenerObject::safeCast(this));
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -93,6 +97,31 @@ void PongState::destructor()
 {
 	// Always explicitly call the base's destructor
 	Base::destructor();
+}
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+bool PongState::onEvent(ListenerObject eventFirer, uint16 eventCode)
+{
+	switch(eventCode)
+	{
+		case kEventCommunicationsConnected:
+		{
+			if(CommunicationManager::isMaster(CommunicationManager::getInstance()))
+			{
+				PongState::propagateMessage(this, kMessageVersusModePlayer1);
+			}
+			else
+			{
+
+				PongState::propagateMessage(this, kMessageVersusModePlayer2);
+			}
+
+			return false;
+		}
+	}
+
+	return Base::onEvent(this, eventFirer, eventCode);
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————

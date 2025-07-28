@@ -1,6 +1,8 @@
 {
-    "_version": "0.6.0",
-    "messages": {
-        "sT6VG9CEg4GlXgaU": "Keypad Hold Down"
-    }
+	"_version": "0.6.0",
+	"messages": {
+		"9Am5YRqrzj0B86Sq": "Versus Mode Player 1",
+		"J4VEmIBN7wAxcC4I": "Versus Mode Player 2",
+		"sT6VG9CEg4GlXgaU": "Keypad Hold Down"
+	}
 }
