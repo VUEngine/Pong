@@ -118,14 +118,16 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 
 void PongManager::startVersusMode(bool isPlayerOne)
 {	
-	// Reset random seed in multiplayer mode so both machines are completely in sync
-	Math::resetRandomSeed();
-
+	// Reprint the score
 	this->leftScore = 0;
 	this->rightScore = 0;
 
 	PongManager::printScore(this);
 
+	// Reset random seed in multiplayer mode so both machines are completely in sync
+	Math::resetRandomSeed();
+
+	// Propagate the message about the versus mode player assigned to the local system
 	Stage::propagateMessage(this->stage, Container::onPropagatedMessage, isPlayerOne ? kMessageVersusModePlayer1 : kMessageVersusModePlayer2);
 
 	// Since we are using the method processUserInput to sync both system, 
