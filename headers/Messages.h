@@ -18,8 +18,10 @@
 enum Messages
 {
 	kMessageKeypadHoldDown = kMessageLastEngine + 1,
+	kMessageVersusModeDummy,
 	kMessageVersusModePlayer1,
 	kMessageVersusModePlayer2,
+	kMessageVersusModeSendInput,
 };
 
 #endif
