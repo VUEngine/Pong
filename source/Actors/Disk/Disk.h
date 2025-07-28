@@ -27,6 +27,11 @@
 /// Implements a Pong disk.
 mutation class Disk : Actor
 {
+	/// Default interger message handler for propagateMessage
+	/// @param message: Propagated integer message
+	/// @return True if the propagation must stop; false if the propagation must reach other containers
+	override bool handlePropagatedMessage(int32 message);
+
 	/// Process a newly detected collision by one of the component colliders.
 	/// @param collisionInformation: Information struct about the collision to resolve
 	/// @return True if the collider must keep track of the collision to detect if it persists and when it

@@ -13,6 +13,7 @@
 
 #include <Body.h>
 #include <InGameTypes.h>
+#include <Messages.h>
 #include <RumbleEffects.h>
 #include <RumbleManager.h>
 #include <SoundManager.h>
@@ -29,6 +30,23 @@ mutation class Disk;
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 // CLASS' PUBLIC METHODS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+bool Disk::handlePropagatedMessage(int32 message)
+{
+	switch(message)
+	{
+		case kMessageVersusModePlayer1:
+		case kMessageVersusModePlayer2:
+		{
+			Disk::resetPosition(this);
+			return false;
+		}
+	}
+
+	return false;
+}
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
@@ -75,6 +93,19 @@ bool Disk::collisionStarts(const CollisionInformation* collisionInformation)
 void Disk::ready(bool recursive)
 {
 	Base::ready(this, recursive);
+
+	Disk::resetPosition(this);
+}
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+void Disk::resetPosition()
+{
+	Disk::stopMovement(this, __ALL_AXIS);
+	Vector3D localPosition = this->localTransformation.position;
+	localPosition.x = 0;
+	localPosition.y = 0;
+	Disk::setLocalPosition(this, &localPosition);
 
 	int16 angle = Math::random(Math::randomSeed(), 64) - 32;
 
