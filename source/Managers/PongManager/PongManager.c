@@ -43,16 +43,16 @@ void PongManager::constructor(Stage stage)
 
 	PongManager::printScore(this);
 
-	if(!isDeleted(stage))
+	if(!isDeleted(this->stage))
 	{
-		Actor disk = Actor::safeCast(Stage::getChildByName(stage, (char*)DISK_NAME, false));
+		Actor disk = Actor::safeCast(Stage::getChildByName(this->stage, (char*)DISK_NAME, false));
 
 		if(!isDeleted(disk))
 		{
 			Actor::addEventListener(disk, ListenerObject::safeCast(this), kEventActorDeleted);
 		}
 
-		Stage::addActorLoadingListener(stage, ListenerObject::safeCast(this));
+		Stage::addActorLoadingListener(this->stage, ListenerObject::safeCast(this));
 	}
 
 	Printer::addEventListener(Printer::getInstance(), ListenerObject::safeCast(this), kEventFontRewritten);
