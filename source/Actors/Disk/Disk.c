@@ -168,7 +168,13 @@ void Disk::sychronize()
 
 	do
 	{
-		if(!CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), kMessageVersusModeSendInput, (BYTE*)&remoteDiskData, sizeof(remoteDiskData)))
+		if
+		(
+			!CommunicationManager::sendAndReceiveData
+			(
+				CommunicationManager::getInstance(), kMessageVersusModeSendInput, (BYTE*)&remoteDiskData, sizeof(remoteDiskData)
+			)
+		)
 		{
 			CommunicationManager::cancelCommunications(CommunicationManager::getInstance());
 		}

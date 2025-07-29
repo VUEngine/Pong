@@ -74,7 +74,14 @@ void RemotePaddle::transmitData(uint16 holdKey)
 		/*
 		 * Data transmission can fail if there was already a request to send data.
 		 */
-		if(!CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), kMessageVersusModeSendInput, &holdKey, sizeof(holdKey)))
+		if
+		(
+			!CommunicationManager::sendAndReceiveData
+			(
+				CommunicationManager::getInstance(), 
+				kMessageVersusModeSendInput, (BYTE*)&holdKey, sizeof(holdKey)
+			)
+		)
 		{
 			/*
 			 * In this case, simply cancel all communications and try again. This supposes
