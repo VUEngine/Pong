@@ -53,8 +53,8 @@ bool PlayerPaddle::handlePropagatedMessage(int32 message)
 			{
 				UserInput userInput = KeypadManager::getUserInput();
 
-				fixed_t forceMagnitude = 0;
-				
+				fixed_t forceMagnitude = 0;	
+
 				if(0 != (K_LU & userInput.holdKey))
 				{
 					forceMagnitude = -__FIXED_MULT(Body::getMass(this->body), Body::getMaximumSpeed(this->body));

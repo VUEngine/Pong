@@ -2,9 +2,10 @@
 	"_version": "0.6.0",
 	"messages": {
 		"9Am5YRqrzj0B86Sq": "Versus Mode Player 1",
+		"hYtxSqsi8pU7gzuD": "Versus Mode Dummy",
 		"J4VEmIBN7wAxcC4I": "Versus Mode Player 2",
+		"P2QPoGTDZKra2uVC": "Start Versus Mode",
 		"sT6VG9CEg4GlXgaU": "Keypad Hold Down",
-		"VOnARyBmZa1NUeOz": "Versus Mode Send Input",
-		"hYtxSqsi8pU7gzuD": "Versus Mode Dummy"
+		"VOnARyBmZa1NUeOz": "Versus Mode Send Input"
 	}
 }

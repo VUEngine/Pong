@@ -57,7 +57,6 @@ void PongManager::constructor(Stage stage)
 
 	Printer::addEventListener(Printer::getInstance(), ListenerObject::safeCast(this), kEventFontRewritten);
 
-	// Enable comms
 	CommunicationManager::enableCommunications(CommunicationManager::getInstance(), ListenerObject::safeCast(this));
 }
 
@@ -77,7 +76,11 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 	{
 		case kEventCommunicationsConnected:
 		{
-			PongManager::startVersusMode(this);
+			// Disable the gameplay for a few cycles
+			KeypadManager::disable();
+
+			// Delay the start of the versus mode
+			PongManager::sendMessageToSelf(this, kMessageStartVersusMode, 250, 0);
 			return false;
 		}
 
@@ -126,6 +129,22 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
+bool PongManager::handleMessage(Telegram telegram)
+{
+	switch(Telegram::getMessage(telegram))
+	{
+		case kMessageStartVersusMode:
+		{
+			PongManager::startVersusMode(this);
+			break;
+		}
+	}
+
+	return true;
+}
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
 void PongManager::startVersusMode()
 {	
 	// Reprint the score
@@ -145,6 +164,7 @@ void PongManager::startVersusMode()
 	// Since we are using the method processUserInput to sync both system, 
 	// we must make sure that it is called regardless of local input
 	KeypadManager::enableDummyKey();
+	KeypadManager::enable();
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————

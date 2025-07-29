@@ -12,6 +12,7 @@
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #include <Body.h>
+#include <CommunicationManager.h>
 #include <InGameTypes.h>
 #include <Messages.h>
 #include <RumbleEffects.h>
@@ -41,6 +42,13 @@ bool Disk::handlePropagatedMessage(int32 message)
 		case kMessageVersusModePlayer2:
 		{
 			Disk::resetPosition(this);
+			Disk::startMoving(this);
+			return false;
+		}
+
+		case kMessageKeypadHoldDown:
+		{
+			Disk::sychronize(this);
 			return false;
 		}
 	}
@@ -94,8 +102,14 @@ void Disk::ready(bool recursive)
 {
 	Base::ready(this, recursive);
 
-	Disk::resetPosition(this);
+	Disk::startMoving(this);
 }
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+// CLASS' PRIVATE METHODS
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
@@ -106,8 +120,13 @@ void Disk::resetPosition()
 	localPosition.x = 0;
 	localPosition.y = 0;
 	Disk::setLocalPosition(this, &localPosition);
+}
 
-	int16 angle = Math::random(Math::randomSeed(), 64) - 32;
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+void Disk::startMoving()
+{
+	int16 angle = (Math::random(Math::randomSeed(), 128) - 64) >> 1;
 
 	Vector3D velocity = 
 	{
@@ -122,6 +141,48 @@ void Disk::resetPosition()
 	}
 
 	Disk::setVelocity(this, &velocity, false);
+}
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+void Disk::sychronize()
+{
+	if(!CommunicationManager::isConnected(CommunicationManager::getInstance()))
+	{
+		return;
+	}
+
+	typedef struct RemoteDiskData
+	{
+		Vector3D position;
+		Vector3D velocity;
+
+	} RemoteDiskData;
+
+	uint32 receivedMessage = kMessageVersusModeDummy;
+	RemoteDiskData remoteDiskData = 
+	{
+		*Body::getPosition(this->body),
+		*Body::getVelocity(this->body)
+	};
+
+	do
+	{
+		if(!CommunicationManager::sendAndReceiveData(CommunicationManager::getInstance(), kMessageVersusModeSendInput, (BYTE*)&remoteDiskData, sizeof(remoteDiskData)))
+		{
+			CommunicationManager::cancelCommunications(CommunicationManager::getInstance());
+		}
+
+		receivedMessage = CommunicationManager::getReceivedMessage(CommunicationManager::getInstance());
+		remoteDiskData = *(const RemoteDiskData*)CommunicationManager::getReceivedData(CommunicationManager::getInstance());
+	}
+	while(kMessageVersusModeSendInput != receivedMessage);
+
+	Vector3D averageBodyPosition = Vector3D::intermediate(*Body::getPosition(this->body), remoteDiskData.position);
+	Vector3D averageBodyVelocity = Vector3D::intermediate(*Body::getVelocity(this->body), remoteDiskData.velocity);
+
+	Body::setPosition(this->body, &averageBodyPosition, Entity::safeCast(this));
+	Body::setVelocity(this->body, &averageBodyVelocity);
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————

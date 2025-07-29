@@ -65,10 +65,7 @@ void PongState::exit(void* owner __attribute__((unused)))
 
 void PongState::processUserInput(const UserInput* userInput)
 {
-	if(0 != userInput->dummyKey)
-	{
-		PongState::propagateMessage(this, kMessageKeypadHoldDown);
-	}
+	PongState::propagateMessage(this, kMessageKeypadHoldDown);
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
