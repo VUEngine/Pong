@@ -42,9 +42,6 @@ void PongState::enter(void* owner __attribute__((unused)))
 
 	// Start clocks to start animations, physics, etc
 	PongState::startClocks(this);
-
-	// Enable user input
-	KeypadManager::enable();
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
