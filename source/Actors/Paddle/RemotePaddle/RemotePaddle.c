@@ -64,11 +64,11 @@ void RemotePaddle::transmitData(uint16 holdKey)
 		if(
 			CommunicationManager::sendAndReceiveData
 			(
-				communicationManager, RemotePaddle::getClass(), &holdKey, sizeof(holdKey)
+				communicationManager, (uint32)RemotePaddle::getClass(), (BYTE*)&holdKey, sizeof(holdKey)
 			)
 		)
 		{
-			if(RemotePaddle::getClass() == CommunicationManager::getReceivedMessage(communicationManager))
+			if((uint32)RemotePaddle::getClass() == CommunicationManager::getReceivedMessage(communicationManager))
 			{
 				RemotePaddle::move(this, *(const uint16*)CommunicationManager::getReceivedData(communicationManager));
 			}

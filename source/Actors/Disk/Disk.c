@@ -108,30 +108,26 @@ void Disk::update()
 {
 	CommunicationManager communicationManager = CommunicationManager::getInstance();
 
-	if(!CommunicationManager::isConnected(communicationManager))
+	if(CommunicationManager::isConnected(communicationManager))
 	{
-		return;
-	}
-
-	if
-	(
-		!CommunicationManager::sendAndReceiveData
+		if
 		(
-			communicationManager, Disk::getClass(), 
-			(BYTE*)&this->transformation.position, sizeof(this->transformation.position)
+			CommunicationManager::sendAndReceiveData
+			(
+				communicationManager, (uint32)Disk::getClass(), 
+				(BYTE*)&this->transformation.position, sizeof(this->transformation.position)
+			)
 		)
-	)
-	{
-		return;
-	}
-
-	if(Disk::getClass() == CommunicationManager::getReceivedMessage(communicationManager))
-	{
-		if(Disk::mustSychronize(this))
 		{
-			Disk::stopMovement(this, __ALL_AXIS);
+			if((uint32)Disk::getClass() == CommunicationManager::getReceivedMessage(communicationManager))
+			{
+				if(Disk::mustSychronize(this))
+				{
+					Disk::stopMovement(this, __ALL_AXIS);
 
-			Disk::setPosition(this, (const Vector3D*)CommunicationManager::getReceivedData(communicationManager));
+					Disk::setPosition(this, (const Vector3D*)CommunicationManager::getReceivedData(communicationManager));
+				}
+			}
 		}
 	}
 }

@@ -63,7 +63,7 @@ void PongState::exit(void* owner __attribute__((unused)))
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-void PongState::processUserInput(const UserInput* userInput)
+void PongState::processUserInput(const UserInput* userInput __attribute__((unused)))
 {
 	PongState::propagateMessage(this, kMessageKeypadHoldDown);
 }
