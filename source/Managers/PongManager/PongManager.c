@@ -58,12 +58,22 @@ void PongManager::constructor(Stage stage)
 
 	Printer::addEventListener(Printer::getInstance(), ListenerObject::safeCast(this), kEventFontRewritten);
 
-	CommunicationManager::enableCommunications(CommunicationManager::getInstance(), ListenerObject::safeCast(this));
-
 	PongManager::sendMessageToSelf(this, kMessageStartGame, 1000, 0);
 
 	// Disable the gameplay for a few cycles
 	KeypadManager::disable();
+
+	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+	{
+		// Propagate the message about the versus mode player assigned to the local system
+		Stage::propagateMessage
+		(
+			this->stage, Container::onPropagatedMessage, 
+			CommunicationManager::isMaster(CommunicationManager::getInstance()) ? kMessageVersusModePlayer1 : kMessageVersusModePlayer2
+		);
+
+		Printer::text("Waiting", 24 - 3, 27, NULL);
+	}
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -80,16 +90,6 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 {
 	switch(eventCode)
 	{
-		case kEventCommunicationsConnected:
-		{
-			// First, discard any previous message to start the game
-			PongManager::discardMessages(this, kMessageStartGame);
-
-			// Then call the method that setups the game to start the versus match
-			PongManager::startVersusMode(this);
-			return false;
-		}
-
 		case kEventFontRewritten:
 		{
 			PongManager::printScore(this);
@@ -102,9 +102,7 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 			if(0 == strcmp(DISK_NAME, Actor::getName(eventFirer)))
 			{
 				SoundManager::playSound(&PointSoundSpec,  NULL, kSoundPlaybackNormal, NULL);
-				
-				// Commented out because this causes the communication's handshake to be cancelled
-				//RumbleManager::startEffect(&PointRumbleEffectSpec);
+				RumbleManager::startEffect(&PointRumbleEffectSpec);
 
 				if(0 < Actor::getPosition(eventFirer)->x)
 				{
@@ -151,6 +149,8 @@ bool PongManager::handleMessage(Telegram telegram)
 			{
                 // Must make sure that both systems are in sync before starting the game
 				CommunicationManager::startSyncCycle(CommunicationManager::getInstance());
+
+				Printer::text("        ", 24 - 3, 27, NULL);
 			}
 
 			// Propagate the message to start the game
@@ -166,27 +166,6 @@ bool PongManager::handleMessage(Telegram telegram)
 	}
 
 	return true;
-}
-
-//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-void PongManager::startVersusMode()
-{
-	// Reprint the score
-	this->leftScore = 0;
-	this->rightScore = 0;
-
-	PongManager::printScore(this);
-
-	// Propagate the message about the versus mode player assigned to the local system
-	Stage::propagateMessage
-	(
-		this->stage, Container::onPropagatedMessage, 
-		CommunicationManager::isMaster(CommunicationManager::getInstance()) ? kMessageVersusModePlayer1 : kMessageVersusModePlayer2
-	);
-
-	// Delay the start of the versus mode
-	PongManager::sendMessageToSelf(this, kMessageStartGame, 250, 0);
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————

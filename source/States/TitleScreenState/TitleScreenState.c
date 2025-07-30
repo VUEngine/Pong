@@ -15,6 +15,7 @@
 
 #include <Camera.h>
 #include <CameraEffectManager.h>
+#include <CommunicationManager.h>
 #include <KeypadManager.h>
 #include <PongState.h>
 #include <Singleton.h>
@@ -56,6 +57,8 @@ void TitleScreenState::enter(void* owner __attribute__((unused)))
 		__FADE_DELAY,  // delay between fading steps (in ms)
 		NULL		   // callback scope
 	);
+
+	CommunicationManager::enableCommunications(CommunicationManager::getInstance(), ListenerObject::safeCast(this));
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -91,3 +94,20 @@ void TitleScreenState::destructor()
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+bool TitleScreenState::onEvent(ListenerObject eventFirer, uint16 eventCode)
+{
+	switch(eventCode)
+	{
+		case kEventCommunicationsConnected:
+		{
+			Printer::text("Connected", 24 - 4, 27, NULL);
+			return false;
+		}
+	}
+
+	return Base::onEvent(this, eventFirer, eventCode);
+}
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
