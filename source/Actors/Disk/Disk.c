@@ -94,7 +94,9 @@ bool Disk::collisionStarts(const CollisionInformation* collisionInformation)
 		case kTypeWall:
 		{
 			SoundManager::playSound(&BounceSoundSpec,  NULL, kSoundPlaybackNormal, NULL);
-			RumbleManager::startEffect(&BounceRumbleEffectSpec);
+			
+			// Commented out because this causes the communication's handshake to be cancelled
+			// RumbleManager::startEffect(&BounceRumbleEffectSpec);
 		}
 		break;
 	}

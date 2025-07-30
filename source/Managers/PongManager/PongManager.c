@@ -102,7 +102,9 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 			if(0 == strcmp(DISK_NAME, Actor::getName(eventFirer)))
 			{
 				SoundManager::playSound(&PointSoundSpec,  NULL, kSoundPlaybackNormal, NULL);
-				RumbleManager::startEffect(&PointRumbleEffectSpec);
+				
+				// Commented out because this causes the communication's handshake to be cancelled
+				//RumbleManager::startEffect(&PointRumbleEffectSpec);
 
 				if(0 < Actor::getPosition(eventFirer)->x)
 				{
