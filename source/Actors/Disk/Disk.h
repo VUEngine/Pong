@@ -38,9 +38,12 @@ mutation class Disk : Actor
 	/// ends; false otherwise
 	override bool collisionStarts(const CollisionInformation* collisionInformation);
 
-	/// Make the animated actor ready to starts operating once it has been completely intialized.
-	/// @param recursive: If true, the ready call is propagated to its children, grand children, etc.
-	override void ready(bool recursive);
+	/// Update this instance's logic.
+	override void update();
+
+	/// Method to determine whether or not to synchronize the position with the remote's.
+	/// @return True if must synchronize the position with the remote instance
+	virtual bool mustSychronize();
 }
 
 #endif

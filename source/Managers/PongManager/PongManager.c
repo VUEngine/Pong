@@ -58,6 +58,11 @@ void PongManager::constructor(Stage stage)
 	Printer::addEventListener(Printer::getInstance(), ListenerObject::safeCast(this), kEventFontRewritten);
 
 	CommunicationManager::enableCommunications(CommunicationManager::getInstance(), ListenerObject::safeCast(this));
+
+	PongManager::sendMessageToSelf(this, kMessageStartGame, 1000, 0);
+
+	// Disable the gameplay for a few cycles
+	KeypadManager::disable();
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -76,11 +81,11 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 	{
 		case kEventCommunicationsConnected:
 		{
-			// Disable the gameplay for a few cycles
-			KeypadManager::disable();
+			// First, discard any previous message to start the game
+			PongManager::discardMessages(this, kMessageStartGame);
 
-			// Delay the start of the versus mode
-			PongManager::sendMessageToSelf(this, kMessageStartVersusMode, 250, 0);
+			// Then call the method that setups the game to start the versus match
+			PongManager::startVersusMode(this);
 			return false;
 		}
 
@@ -118,6 +123,10 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 			if(0 == strcmp(DISK_NAME, Actor::getName(eventFirer)))
 			{
 				Actor::addEventListener(eventFirer, ListenerObject::safeCast(this), kEventActorDeleted);
+
+				KeypadManager::disable();
+
+				PongManager::sendMessageToSelf(this, kMessageStartGame, 100, 0);
 			}
 
 			return true;
@@ -133,9 +142,22 @@ bool PongManager::handleMessage(Telegram telegram)
 {
 	switch(Telegram::getMessage(telegram))
 	{
-		case kMessageStartVersusMode:
+		case kMessageStartGame:
 		{
-			PongManager::startVersusMode(this);
+			if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+			{
+                // Must make sure that both systems are in sync before starting the game
+				CommunicationManager::startSyncCycle(CommunicationManager::getInstance());
+			}
+
+			// Propagate the message to start the game
+			Stage::propagateMessage(this->stage, Container::onPropagatedMessage, kMessageStartGame);
+
+			// Since we are using the method processUserInput to sync both system, 
+			// we must make sure that it is called regardless of local input
+			KeypadManager::enableDummyKey();
+			KeypadManager::enable();
+
 			break;
 		}
 	}
@@ -146,25 +168,22 @@ bool PongManager::handleMessage(Telegram telegram)
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 void PongManager::startVersusMode()
-{	
+{
 	// Reprint the score
 	this->leftScore = 0;
 	this->rightScore = 0;
 
 	PongManager::printScore(this);
 
-	// Reset random seed in multiplayer mode so both machines are completely in sync
-	Math::resetRandomSeed();
-
-	bool isPlayerOne = CommunicationManager::isMaster(CommunicationManager::getInstance());
-
 	// Propagate the message about the versus mode player assigned to the local system
-	Stage::propagateMessage(this->stage, Container::onPropagatedMessage, isPlayerOne ? kMessageVersusModePlayer1 : kMessageVersusModePlayer2);
+	Stage::propagateMessage
+	(
+		this->stage, Container::onPropagatedMessage, 
+		CommunicationManager::isMaster(CommunicationManager::getInstance()) ? kMessageVersusModePlayer1 : kMessageVersusModePlayer2
+	);
 
-	// Since we are using the method processUserInput to sync both system, 
-	// we must make sure that it is called regardless of local input
-	KeypadManager::enableDummyKey();
-	KeypadManager::enable();
+	// Delay the start of the versus mode
+	PongManager::sendMessageToSelf(this, kMessageStartGame, 250, 0);
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————

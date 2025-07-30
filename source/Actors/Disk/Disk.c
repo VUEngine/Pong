@@ -38,17 +38,23 @@ bool Disk::handlePropagatedMessage(int32 message)
 {
 	switch(message)
 	{
-		case kMessageVersusModePlayer1:
-		case kMessageVersusModePlayer2:
+		case kMessageStartGame:
 		{
 			Disk::resetPosition(this);
 			Disk::startMoving(this);
 			return false;
 		}
 
-		case kMessageKeypadHoldDown:
+		case kMessageVersusModePlayer1:
 		{
-			Disk::sychronize(this);
+			Disk::mutateMethod(mustSychronize, Disk::mustNotSychronize);
+			Disk::resetPosition(this);
+			return false;
+		}
+
+		case kMessageVersusModePlayer2:
+		{
+			Disk::resetPosition(this);
 			return false;
 		}
 	}
@@ -98,11 +104,36 @@ bool Disk::collisionStarts(const CollisionInformation* collisionInformation)
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-void Disk::ready(bool recursive)
+void Disk::update()
 {
-	Base::ready(this, recursive);
+	CommunicationManager communicationManager = CommunicationManager::getInstance();
 
-	Disk::startMoving(this);
+	if(!CommunicationManager::isConnected(communicationManager))
+	{
+		return;
+	}
+
+	if
+	(
+		!CommunicationManager::sendAndReceiveData
+		(
+			communicationManager, Disk::getClass(), 
+			(BYTE*)&this->transformation.position, sizeof(this->transformation.position)
+		)
+	)
+	{
+		return;
+	}
+
+	if(Disk::getClass() == CommunicationManager::getReceivedMessage(communicationManager))
+	{
+		if(Disk::mustSychronize(this))
+		{
+			Disk::stopMovement(this, __ALL_AXIS);
+
+			Disk::setPosition(this, (const Vector3D*)CommunicationManager::getReceivedData(communicationManager));
+		}
+	}
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -145,50 +176,17 @@ void Disk::startMoving()
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-void Disk::sychronize()
+bool Disk::mustSychronize()
 {
-	if(!CommunicationManager::isConnected(CommunicationManager::getInstance()))
-	{
-		return;
-	}
-
-	typedef struct RemoteDiskData
-	{
-		Vector3D position;
-		Vector3D velocity;
-
-	} RemoteDiskData;
-
-	uint32 receivedMessage = kMessageVersusModeDummy;
-	RemoteDiskData remoteDiskData = 
-	{
-		*Body::getPosition(this->body),
-		*Body::getVelocity(this->body)
-	};
-
-	do
-	{
-		if
-		(
-			!CommunicationManager::sendAndReceiveData
-			(
-				CommunicationManager::getInstance(), kMessageVersusModeSendInput, (BYTE*)&remoteDiskData, sizeof(remoteDiskData)
-			)
-		)
-		{
-			CommunicationManager::cancelCommunications(CommunicationManager::getInstance());
-		}
-
-		receivedMessage = CommunicationManager::getReceivedMessage(CommunicationManager::getInstance());
-		remoteDiskData = *(const RemoteDiskData*)CommunicationManager::getReceivedData(CommunicationManager::getInstance());
-	}
-	while(kMessageVersusModeSendInput != receivedMessage);
-
-	Vector3D averageBodyPosition = Vector3D::intermediate(*Body::getPosition(this->body), remoteDiskData.position);
-	Vector3D averageBodyVelocity = Vector3D::intermediate(*Body::getVelocity(this->body), remoteDiskData.velocity);
-
-	Body::setPosition(this->body, &averageBodyPosition, Entity::safeCast(this));
-	Body::setVelocity(this->body, &averageBodyVelocity);
+	return true;
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+bool Disk::mustNotSychronize()
+{
+	return false;
+}
+
+//——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
