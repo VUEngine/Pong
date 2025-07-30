@@ -22,6 +22,7 @@
 #include <RumbleManager.h>
 #include <SoundManager.h>
 #include <Sounds.h>
+#include <Telegram.h>
 
 #include "PongManager.h"
 
