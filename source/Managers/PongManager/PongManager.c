@@ -29,7 +29,6 @@
 // CLASS' PUBLIC METHODS
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-friend class Stage;
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 void PongManager::constructor(Stage stage)
@@ -158,9 +157,6 @@ bool PongManager::handleMessage(Telegram telegram)
 			// we must make sure that it is called regardless of local input
 			KeypadManager::enableDummyKey();
 			KeypadManager::enable();
-
-			this->stage->streamingPhase = 0;
-			this->stage->streamingHeadNode = NULL;
 
 			break;
 		}
