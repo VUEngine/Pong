@@ -93,6 +93,7 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 		case kEventFontRewritten:
 		{
 			PongManager::printScore(this);
+			Printer::text("        ", 24 - 3, 27, NULL);
 
 			return true;
 		}
