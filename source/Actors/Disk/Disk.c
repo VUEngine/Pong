@@ -115,7 +115,7 @@ void Disk::update()
 			CommunicationManager::sendAndReceiveData
 			(
 				communicationManager, (uint32)Disk::getClass(), 
-				(BYTE*)&this->transformation.position, sizeof(this->transformation.position)
+				(uint8*)&this->transformation.position, sizeof(this->transformation.position)
 			)
 		)
 		{

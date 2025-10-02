@@ -64,7 +64,7 @@ void RemotePaddle::transmitData(uint16 holdKey)
 		if(
 			CommunicationManager::sendAndReceiveData
 			(
-				communicationManager, (uint32)RemotePaddle::getClass(), (BYTE*)&holdKey, sizeof(holdKey)
+				communicationManager, (uint32)RemotePaddle::getClass(), (uint8*)&holdKey, sizeof(holdKey)
 			)
 		)
 		{
