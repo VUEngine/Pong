@@ -93,7 +93,7 @@ bool Disk::collisionStarts(const CollisionInformation* collisionInformation)
 
 		case kTypeWall:
 		{
-			SoundManager::playSound(&BounceSoundSpec,  NULL, kSoundPlaybackNormal, NULL);
+			Sound::playSound(&BounceSoundSpec,  NULL, kSoundPlaybackNormal, NULL);
 			RumbleManager::startEffect(&BounceRumbleEffectSpec);
 		}
 		break;

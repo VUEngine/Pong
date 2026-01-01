@@ -33,6 +33,15 @@ SoundTrackROMSpec* const BounceSoundTracks[] =
 
 SoundROMSpec BounceSoundSpec =
 {
+	// Component
+	{
+		// Allocator
+		__TYPE(Sound),
+
+		// Component type
+		kSoundComponent
+	},
+	
 	// Name
 	"Bounce Sound",
 
