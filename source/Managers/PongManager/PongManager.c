@@ -73,6 +73,9 @@ void PongManager::constructor(Stage stage)
 		);
 
 		Printer::text("Waiting", 24 - 3, 27, NULL);
+
+		// Must make sure that both systems are in sync before starting the game
+		CommunicationManager::startSyncCycle(CommunicationManager::getInstance());
 	}
 }
 
@@ -148,9 +151,6 @@ bool PongManager::handleMessage(Telegram telegram)
 		{
 			if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
 			{
-                // Must make sure that both systems are in sync before starting the game
-				CommunicationManager::startSyncCycle(CommunicationManager::getInstance());
-
 				Printer::text("        ", 24 - 3, 27, NULL);
 			}
 
