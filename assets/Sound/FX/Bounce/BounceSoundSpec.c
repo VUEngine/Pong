@@ -42,8 +42,11 @@ SoundROMSpec BounceSoundSpec =
 		kSoundComponent
 	},
 	
-	// Name
+	// Song/Sound's name
 	"Bounce Sound",
+
+	// Author's name
+	NULL,
 
 	// Play in loop
 	false,
@@ -52,5 +55,8 @@ SoundROMSpec BounceSoundSpec =
 	500,
 
 	// Tracks
-	(SoundTrackSpec**)BounceSoundTracks
+	(SoundTrackSpec**)BounceSoundTracks,
+
+	// Sound group
+	kSoundGroupEffects
 };

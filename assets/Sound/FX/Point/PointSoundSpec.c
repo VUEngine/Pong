@@ -42,8 +42,11 @@ SoundROMSpec PointSoundSpec =
 		kSoundComponent
 	},
 
-	// Name
+	// Song/Sound's name
 	"Point Sound",
+
+	// Author's name
+	NULL,
 
 	// Play in loop
 	false,
@@ -52,5 +55,8 @@ SoundROMSpec PointSoundSpec =
 	500,
 
 	// Tracks
-	(SoundTrackSpec**)PointSoundTracks
+	(SoundTrackSpec**)PointSoundTracks,
+
+	// Sound group
+	kSoundGroupEffects
 };
