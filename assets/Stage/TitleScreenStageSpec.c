@@ -77,11 +77,6 @@ StageROMSpec TitleScreenStageSpec =
 		kMS
 	},
 
-	// Sound config
-	{
-		6000
-	},
-
 	// General stage's attributes
 	{
 		// Stage's size in pixels
