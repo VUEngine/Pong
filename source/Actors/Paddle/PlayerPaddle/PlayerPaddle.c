@@ -12,7 +12,7 @@
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #include <Body.h>
-#include <KeypadManager.h>
+#include <Keypad.h>
 #include <Messages.h>
 #include <RemotePaddle.h>
 
@@ -51,7 +51,7 @@ bool PlayerPaddle::handlePropagatedMessage(int32 message)
 		{
 			if(!isDeleted(this->body))
 			{
-				UserInput userInput = KeypadManager::getUserInput();
+				UserInput userInput = Keypad::getUserInput();
 
 				fixed_t forceMagnitude = 0;	
 

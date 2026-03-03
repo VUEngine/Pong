@@ -13,13 +13,13 @@
 
 #include <string.h>
 
-#include <CommunicationManager.h>
+#include <Communications.h>
 #include <GameEvents.h>
-#include <KeypadManager.h>
+#include <Keypad.h>
 #include <Messages.h>
 #include <Printer.h>
 #include <RumbleEffects.h>
-#include <RumbleManager.h>
+#include <Rumble.h>
 #include <SoundManager.h>
 #include <Sounds.h>
 #include <Telegram.h>
@@ -61,21 +61,21 @@ void PongManager::constructor(Stage stage)
 	PongManager::sendMessageToSelf(this, kMessageStartGame, 1000, 0);
 
 	// Disable the gameplay for a few cycles
-	KeypadManager::disable();
+	Keypad::disable();
 
-	if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+	if(Communications::isConnected())
 	{
 		// Propagate the message about the versus mode player assigned to the local system
 		Stage::propagateMessage
 		(
 			this->stage, Container::onPropagatedMessage, 
-			CommunicationManager::isMaster(CommunicationManager::getInstance()) ? kMessageVersusModePlayer1 : kMessageVersusModePlayer2
+			Communications::isMaster() ? kMessageVersusModePlayer1 : kMessageVersusModePlayer2
 		);
 
 		Printer::text("Waiting", 24 - 3, 27, NULL);
 
 		// Must make sure that both systems are in sync before starting the game
-		CommunicationManager::startSyncCycle(CommunicationManager::getInstance());
+		Communications::startSyncCycle();
 	}
 }
 
@@ -106,7 +106,7 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 			if(0 == strcmp(DISK_NAME, Actor::getName(eventFirer)))
 			{
 				Sound::playSound(&PointSoundSpec,  NULL, kSoundPlaybackNormal, NULL);
-				RumbleManager::startEffect(&PointRumbleEffectSpec);
+				Rumble::startEffect(&PointRumbleEffectSpec);
 
 				if(0 < Actor::getPosition(eventFirer)->x)
 				{
@@ -129,7 +129,7 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 			{
 				Actor::addEventListener(eventFirer, ListenerObject::safeCast(this), kEventActorDeleted);
 
-				KeypadManager::disable();
+				Keypad::disable();
 
 				PongManager::sendMessageToSelf(this, kMessageStartGame, 100, 0);
 			}
@@ -149,7 +149,7 @@ bool PongManager::handleMessage(Telegram telegram)
 	{
 		case kMessageStartGame:
 		{
-			if(CommunicationManager::isConnected(CommunicationManager::getInstance()))
+			if(Communications::isConnected())
 			{
 				Printer::text("        ", 24 - 3, 27, NULL);
 			}
@@ -159,8 +159,8 @@ bool PongManager::handleMessage(Telegram telegram)
 
 			// Since we are using the method processUserInput to sync both system, 
 			// we must make sure that it is called regardless of local input
-			KeypadManager::enableDummyKey();
-			KeypadManager::enable();
+			Keypad::enableDummyKey();
+			Keypad::enable();
 
 			break;
 		}

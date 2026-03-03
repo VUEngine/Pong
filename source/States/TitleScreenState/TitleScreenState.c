@@ -15,8 +15,8 @@
 
 #include <Camera.h>
 #include <CameraEffectManager.h>
-#include <CommunicationManager.h>
-#include <KeypadManager.h>
+#include <Communications.h>
+#include <Keypad.h>
 #include <PongState.h>
 #include <Singleton.h>
 #include <VUEngine.h>
@@ -43,7 +43,7 @@ void TitleScreenState::enter(void* owner __attribute__((unused)))
 	TitleScreenState::configureStage(this, (StageSpec*)&TitleScreenStageSpec, NULL);
 
 	// Enable user input
-	KeypadManager::enable();
+	Keypad::enable();
 
 	// Start fade in effect
 	Camera::startEffect(Camera::getInstance(), kHide);
@@ -58,7 +58,7 @@ void TitleScreenState::enter(void* owner __attribute__((unused)))
 		NULL		   // callback scope
 	);
 
-	CommunicationManager::enableCommunications(CommunicationManager::getInstance(), ListenerObject::safeCast(this));
+	Communications::enableCommunications(ListenerObject::safeCast(this));
 }
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -67,7 +67,7 @@ void TitleScreenState::processUserInput(const UserInput* userInput)
 {
 	if(0 != (K_STA & userInput->pressedKey))
 	{
-		KeypadManager::disable();
+		Keypad::disable();
 
 		VUEngine::changeState(GameState::safeCast(PongState::getInstance()));
 	}

@@ -12,8 +12,8 @@
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #include <Body.h>
-#include <CommunicationManager.h>
-#include <KeypadManager.h>
+#include <Communications.h>
+#include <Keypad.h>
 #include <Messages.h>
 
 #include "RemotePaddle.h"
@@ -36,7 +36,7 @@ bool RemotePaddle::handlePropagatedMessage(int32 message)
 	{
 		case kMessageKeypadHoldDown:
 		{
-			UserInput userInput = KeypadManager::getUserInput();
+			UserInput userInput = Keypad::getUserInput();
 
 			RemotePaddle::transmitData(this, userInput.holdKey);
 
@@ -57,20 +57,15 @@ bool RemotePaddle::handlePropagatedMessage(int32 message)
 
 void RemotePaddle::transmitData(uint16 holdKey)
 {
-	CommunicationManager communicationManager = CommunicationManager::getInstance();
-
-	if(CommunicationManager::isConnected(communicationManager))
+	if(Communications::isConnected())
 	{
 		if(
-			CommunicationManager::sendAndReceiveData
-			(
-				communicationManager, (uint32)RemotePaddle::getClass(), (uint8*)&holdKey, sizeof(holdKey)
-			)
+			Communications::sendAndReceiveData((uint32)RemotePaddle::getClass(), (uint8*)&holdKey, sizeof(holdKey))
 		)
 		{
-			if((uint32)RemotePaddle::getClass() == CommunicationManager::getReceivedMessage(communicationManager))
+			if((uint32)RemotePaddle::getClass() == Communications::getReceivedMessage())
 			{
-				RemotePaddle::move(this, *(const uint16*)CommunicationManager::getReceivedData(communicationManager));
+				RemotePaddle::move(this, *(const uint16*)Communications::getReceivedData());
 			}
 		}
 	}

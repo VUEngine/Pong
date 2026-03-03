@@ -12,11 +12,11 @@
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #include <Body.h>
-#include <CommunicationManager.h>
+#include <Communications.h>
 #include <InGameTypes.h>
 #include <Messages.h>
 #include <RumbleEffects.h>
-#include <RumbleManager.h>
+#include <Rumble.h>
 #include <SoundManager.h>
 #include <Sounds.h>
 
@@ -94,7 +94,7 @@ bool Disk::collisionStarts(const CollisionInformation* collisionInformation)
 		case kTypeWall:
 		{
 			Sound::playSound(&BounceSoundSpec,  NULL, kSoundPlaybackNormal, NULL);
-			RumbleManager::startEffect(&BounceRumbleEffectSpec);
+			Rumble::startEffect(&BounceRumbleEffectSpec);
 		}
 		break;
 	}
@@ -106,26 +106,24 @@ bool Disk::collisionStarts(const CollisionInformation* collisionInformation)
 
 void Disk::update()
 {
-	CommunicationManager communicationManager = CommunicationManager::getInstance();
-
-	if(CommunicationManager::isConnected(communicationManager))
+	if(Communications::isConnected())
 	{
 		if
 		(
-			CommunicationManager::sendAndReceiveData
+			Communications::sendAndReceiveData
 			(
-				communicationManager, (uint32)Disk::getClass(), 
+				(uint32)Disk::getClass(), 
 				(uint8*)&this->transformation.position, sizeof(this->transformation.position)
 			)
 		)
 		{
-			if((uint32)Disk::getClass() == CommunicationManager::getReceivedMessage(communicationManager))
+			if((uint32)Disk::getClass() == Communications::getReceivedMessage())
 			{
 				if(Disk::mustSychronize(this))
 				{
 					Disk::stopMovement(this, __ALL_AXIS);
 
-					Disk::setPosition(this, (const Vector3D*)CommunicationManager::getReceivedData(communicationManager));
+					Disk::setPosition(this, (const Vector3D*)Communications::getReceivedData());
 				}
 			}
 		}
