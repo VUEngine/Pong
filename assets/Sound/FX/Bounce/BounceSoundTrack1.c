@@ -12,7 +12,7 @@
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 #include <Sound.h>
-#include <SoundTrack.h>
+#include <VBSoundTrack.h>
 #include <WaveForms.h>
 
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -63,19 +63,25 @@ const SoundTrackKeyframe BounceSoundTrack1Keyframes[] =
 	{0, kSoundTrackEventEnd},
 };
 
-SoundTrackROMSpec BounceSoundTrack1 =
+VBSoundTrackROMSpec BounceSoundTrack1 =
 {
-	/// Priority for sound channel usage
-	1,
+	// SoundTrack
+	{
+		// Allocator
+		__TYPE(VBSoundTrack),
 
-	/// Skip if no sound source available?
-	false,
+		/// Priority for sound channel usage
+		1,
 
-	/// Loop back point (cursor)
-	0,
+		/// Skip if no sound source available?
+		false,
 
-	/// Keyframes that define the track
-	(SoundTrackKeyframe*)BounceSoundTrack1Keyframes,
+		/// Loop back point (cursor)
+		0,
+
+		/// Keyframes that define the track
+		(SoundTrackKeyframe*)BounceSoundTrack1Keyframes
+	},
 
 	/// SxINT values
 	(uint8*)BounceSoundTrack1SxINT,
