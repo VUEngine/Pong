@@ -22,7 +22,7 @@ extern uint16 LogoActorLogoMap[];
 // SPRITES
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-CharSetROMSpec LogoSprite1CharsetSpec =
+TileSetROMSpec LogoSprite1CharsetSpec =
 {
 	// Number of CHARs in function of the number of frames to load at the same time
 	21,
@@ -43,7 +43,7 @@ CharSetROMSpec LogoSprite1CharsetSpec =
 TextureROMSpec LogoSprite1TextureSpec =
 {
 	// Pointer to the char spec that the texture uses
-	(CharSetSpec*)&LogoSprite1CharsetSpec,
+	(TileSetSpec*)&LogoSprite1CharsetSpec,
 
 	// Pointer to the map array that defines how to use the tiles from the char set
 	LogoActorLogoMap,

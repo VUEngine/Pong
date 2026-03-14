@@ -27,7 +27,7 @@ extern uint16 PlayerPaddleActorPaddleMap[];
 // SPRITES
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-CharSetROMSpec PlayerPaddleSprite1CharsetSpec =
+TileSetROMSpec PlayerPaddleSprite1CharsetSpec =
 {
 	// Number of CHARs in function of the number of frames to load at the same time
 	2,
@@ -48,7 +48,7 @@ CharSetROMSpec PlayerPaddleSprite1CharsetSpec =
 TextureROMSpec PlayerPaddleSprite1TextureSpec =
 {
 	// Pointer to the char spec that the texture uses
-	(CharSetSpec*)&PlayerPaddleSprite1CharsetSpec,
+	(TileSetSpec*)&PlayerPaddleSprite1CharsetSpec,
 
 	// Pointer to the map array that defines how to use the tiles from the char set
 	PlayerPaddleActorPaddleMap,

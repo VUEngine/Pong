@@ -11,7 +11,7 @@
 // INCLUDES
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-#include <CharSet.h>
+#include <TileSet.h>
 #include <Fonts.h>
 #include <Printer.h>
 #include <Stage.h>
@@ -246,8 +246,8 @@ StageROMSpec TitleScreenStageSpec =
 		// Fonts to preload
 		(FontSpec**)TitleScreenStageFonts,
 
-		// CharSets to preload
-		(CharSetSpec**)NULL,
+		// TileSets to preload
+		(TileSetSpec**)NULL,
 
 		// Textures to preload
 		(TextureSpec**)NULL,
