@@ -81,8 +81,9 @@ SECTIONS
 		PROVIDE (__dramDataEnd = .);
 	} >dram = 0xFF
 
-	.sram_data __sramVma : AT(v + SIZEOF(.data) + SIZEOF(.sdata) + SIZEOF(.dram_data)) SUBALIGN(2)
+	.sram_data __sramVma : AT(v + SIZEOF(.data) + SIZEOF(.sdata) + SIZEOF(.dram_data)) SUBALIGN(4)
 	{
+    	. = ALIGN(4);  /* Align the location counter inside the section */
 		PROVIDE (__sramDataStart = .);
 		*(.sram_data*)
 		PROVIDE (__sramDataEnd = .);
@@ -100,6 +101,7 @@ SECTIONS
 		*(.bss*)
 		*(COMMON)
 		PROVIDE (__bssEnd = .);
+		PROVIDE (_end = __bssEnd);
 	} >wram = 0xFF
 
 	.dram_bss (NOLOAD): AT(__dramDataEnd) SUBALIGN(4)
@@ -110,8 +112,9 @@ SECTIONS
 	} >dram = 0xFF
 
 	/* SRAM Work RAM */
-	.sram_bss (NOLOAD): SUBALIGN(2)
+	.sram_bss (NOLOAD): SUBALIGN(4)
 	{
+    	. = ALIGN(4);  /* Align the location counter inside the section */
 		PROVIDE(__sramBssStart = .);
 		*(.sram_bss*)
 		PROVIDE(__sramBssEnd = .);
