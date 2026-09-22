@@ -18,14 +18,6 @@ RumbleEffectROMSpec PointRumbleEffectSpec =
 	12,
 	// Frequency
 	__RUMBLE_FREQ_160HZ,
-	// Positive Sustain
-	255,
-	// Negative Sustain
-	255,
-	// Overdrive
-	126,
-	// Break
-	255,
 	// Stop before starting
 	true,
 };
