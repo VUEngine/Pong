@@ -106,8 +106,8 @@ bool PongManager::onEvent(ListenerObject eventFirer, uint16 eventCode)
 			if(0 == strcmp(DISK_NAME, Actor::getName(eventFirer)))
 			{
 				Sound::playSound(&PointSoundSpec,  NULL, kSoundPlaybackNormal, NULL);
-				Rumble::startEffect(&PointRumbleEffectSpec, true);
-
+				Rumble::startEffect(&PointRumbleEffectSpec, true, false);
+				
 				if(0 < Actor::getPosition(eventFirer)->x)
 				{
 					this->leftScore++;
