@@ -53,7 +53,7 @@ bool PlayerPaddle::handlePropagatedMessage(int32 message)
 			{
 				UserInput userInput = Keypad::getUserInput();
 
-				fixed_t forceMagnitude = 0;	
+				fixed_t forceMagnitude = 0;
 
 				if(0 != (K_LU & userInput.holdKey))
 				{

@@ -33,7 +33,7 @@ extern ActorSpec WallActorSpec;
 //——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 PositionedActorROMSpec PongStageActors[] =
-{	
+{
 	{&DiskActorSpec, 				{0, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, DISK_NAME, NULL, NULL, false},
 	{&PlayerPaddleActorSpec, 		{-180, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, NULL, NULL, NULL, false},
 	{&AIPaddleActorSpec, 			{180, 0, 0}, {0, 0, 0}, {1, 1, 1}, 0, NULL, NULL, NULL, false},

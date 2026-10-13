@@ -51,7 +51,7 @@ void PongState::exit(void* owner __attribute__((unused)))
 	if(!isDeleted(this->pongManager))
 	{
 		delete this->pongManager;
-	}	
+	}
 
 	this->pongManager = NULL;
 
